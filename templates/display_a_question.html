@@ -17,18 +17,14 @@
                 <th>Answers:</th>
             </tr>
         </thead>
-        {% for question in question_data %}
         <tr>
-            <td>{{ question['id'] }}</td>
-            <td>{{ question['submission_time'] }}</td>
-            <td>{{ question['view_number'] }}</td>
-            <td>{{ question['vote_number'] }}</td>
-            <td>{{ question['title'] }}</td>
-            <td>{{ question['message'] }}</td>
-        {% endfor %}
-        {% for answer in answer_data %}
-            <td>{{ answer['message'] }}</td>
-        {% endfor %}
+            <td>{{ question_data.get('id') }}</td>
+            <td>{{ question_data.get('submission_time') }}</td>
+            <td>{{ question_data.get('view_number') }}</td>
+            <td>{{ question_data.get('vote_number') }}</td>
+            <td>{{ question_data.get('title') }}</td>
+            <td>{{ question_data.get('message') }}</td>
+            <td>{{ answer_data.get('message') }}</td>
         </tr>
     </table>
 </body>

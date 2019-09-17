@@ -31,3 +31,4 @@ def get_answers(id=None):
 
     return csv_data
 
+print(get_answers('1'))
