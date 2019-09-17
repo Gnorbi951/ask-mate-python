@@ -12,26 +12,15 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Submission time</th>
-                <th>View Number</th>
-                <th>Vote Number</th>
                 <th>Title</th>
-                <th>Message</th>
-                <th>Image</th>
             </tr>
         </thead>
         {% for value in data %}
         <tr>
             <td>{{value['id'] }}</td>
-            <td>{{value['submission_time']}}</td>
-            <td>{{value['view_number']}}</td>
-            <td>{{value['vote_number']}}</td>
             <td><a href="{{url_for('display_question', question_id=value['id']) }}">{{value['title']}}</a></td>
-            <td>{{value['message']}}</td>
-            <td>{{value['image']}}</td>
         </tr>
         {% endfor %}
     </table>
-    <a href="/question">Question</a>
 </body>
 </html>

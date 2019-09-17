@@ -12,9 +12,13 @@ def list_questions():
     return render_template('list.html', data=data)
 
 
-@app.route('/question')
-def display_question(data):
-    pass
+@app.route('/question/<question_id>')
+def display_question(question_id: int):
+    question_data = data_manager.get_questions()
+    answer_data = data_manager.get_answers()
+    return render_template('display_a_question.html',
+                           question_data=question_data,
+                           answer_data=answer_data)
 
 
 if __name__ == '__main__':
