@@ -18,7 +18,8 @@ def display_question(question_id: int):
     answer_data = data_manager.get_answers(question_id)
     return render_template('display_a_question.html',
                            question_data=question_data,
-                           answer_data=answer_data)
+                           answer_data=answer_data
+                           )
 
 
 if __name__ == '__main__':
