@@ -8,7 +8,8 @@ app = Flask(__name__)
 
 @app.route('/')
 def modify_me():
-    return render_template('list.html')
+    data = data_manager.get_data()
+    return render_template('list.html', data=data)
 
 
 if __name__ == '__main__':

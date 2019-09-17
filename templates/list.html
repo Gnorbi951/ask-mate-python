@@ -5,11 +5,32 @@
     <title>Ask Mate</title>
 </head>
 <body>
+    <h1>
+        Ask Mate
+    </h1>
     <table>
-        {% for value in data.values() %}
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Submission time</th>
+                <th>View Number</th>
+                <th>Vote Number</th>
+                <th>Title</th>
+                <th>Message</th>
+                <th>Image</th>
+            </tr>
+        </thead>
+        {% for value in data %}
         <tr>
-            <td>value</td>
+            <td>{{value['id'] }}</td>
+            <td>{{value['submission_time']}}</td>
+            <td>{{value['view_number']}}</td>
+            <td>{{value['vote_number']}}</td>
+            <td>{{value['title']}}</td>
+            <td>{{value['message']}}</td>
+            <td>{{value['image']}}</td>
         </tr>
+        {% endfor %}
     </table>
 </body>
 </html>
