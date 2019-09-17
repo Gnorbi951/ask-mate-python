@@ -30,5 +30,3 @@ def get_answers(id=None):
             csv_data.append(d)
 
     return csv_data
-
-print(get_answers('1'))

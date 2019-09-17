@@ -16,6 +16,8 @@ def list_questions():
 def display_question(question_id: int):
     question_data = data_manager.get_questions(question_id)
     answer_data = data_manager.get_answers(question_id)
+    if isinstance(answer_data, list):
+        answer_data = {'message': 'No answer so far...'}
     return render_template('display_a_question.html',
                            question_data=question_data,
                            answer_data=answer_data
