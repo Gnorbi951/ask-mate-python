@@ -14,8 +14,8 @@ def list_questions():
 
 @app.route('/question/<question_id>')
 def display_question(question_id: int):
-    question_data = data_manager.get_questions()
-    answer_data = data_manager.get_answers()
+    question_data = data_manager.get_questions(question_id)
+    answer_data = data_manager.get_answers(question_id)
     return render_template('display_a_question.html',
                            question_data=question_data,
                            answer_data=answer_data)
