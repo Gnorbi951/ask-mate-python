@@ -26,7 +26,7 @@
             <td>{{value['submission_time']}}</td>
             <td>{{value['view_number']}}</td>
             <td>{{value['vote_number']}}</td>
-            <td>{{value['title']}}</td>
+            <td><a href="{{url_for('display_question', question_id=value['id']) }}">{{value['title']}}</a></td>
             <td>{{value['message']}}</td>
             <td>{{value['image']}}</td>
         </tr>

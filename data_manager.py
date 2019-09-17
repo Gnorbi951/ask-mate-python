@@ -13,7 +13,7 @@ def get_questions():
 
 
 def get_answers():
-    """Get the data from the answers csv as an Odered_Dict list"""
+    """Get the data from the answers csv as an Ordered_Dict list"""
     csv_data = []
     with open('sample_data/answers.csv') as f:
         reader = csv.DictReader(f)

@@ -13,7 +13,7 @@ def list_questions():
 
 
 @app.route('/question')
-def display_questions(data):
+def display_question(data):
     pass
 
 
