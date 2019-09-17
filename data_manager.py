@@ -9,4 +9,4 @@ def get_data():
         for row in reader:
             d = dict(row)
             csv_data.append(d)
-    return csv_data
+    return csv_data[::-1]
