@@ -1,5 +1,5 @@
 import csv
-
+import time
 
 def get_questions(id=None):
     """Get the data from the questions csv as an Ordered_Dict list"""
@@ -30,3 +30,7 @@ def get_answers(id=None):
             csv_data.append(d)
 
     return csv_data
+
+
+def get_time():
+    return int(time.time())

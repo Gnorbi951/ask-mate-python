@@ -1,12 +1,10 @@
-from flask import Flask, request, render_template, url_for
-import util
+from flask import Flask, request, render_template, redirect
 import data_manager
-import connection
 
 app = Flask(__name__)
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def list_questions():
     data = data_manager.get_questions()
     return render_template('list.html', data=data)
@@ -22,6 +20,16 @@ def display_question(question_id: int):
                            question_data=question_data,
                            answer_data=answer_data
                            )
+
+
+@app.route('/add-question', methods=['GET', 'POST'])
+def add_question():
+    if request.method == 'POST':
+        site_input = request.form['title']
+        print(site_input)
+        return redirect('/')
+    else:
+        return render_template('add_a_question.html')
 
 
 if __name__ == '__main__':
