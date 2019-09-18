@@ -33,7 +33,7 @@ def handle_exceptions():
 def add_question():
     if request.method == 'POST':
         site_input = [request.form['title'], request.form['message']]
-        data_manager.write_to_question_csv(site_input)
+        data_manager.pass_question_to_handler(site_input)
         return redirect('/')
     else:
         return render_template('add_a_question.html')
