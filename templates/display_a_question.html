@@ -5,6 +5,9 @@
     <title>A question</title>
 </head>
 <body>
+    <h1>
+        Question:
+    </h1>
     <table>
         <thead>
             <tr>
@@ -14,7 +17,6 @@
                 <th>Vote Number:</th>
                 <th>Title:</th>
                 <th>Message:</th>
-                <th>Answers:</th>
             </tr>
         </thead>
         <tr>
@@ -24,6 +26,11 @@
             <td>{{ question_data.get('vote_number') }}</td>
             <td>{{ question_data.get('title') }}</td>
             <td>{{ question_data.get('message') }}</td>
+        </tr>
+    </table>
+    <table>
+        <h1>Answers:</h1>
+        <tr>
             <td>{{ answer_data.get('message') }}</td>
         </tr>
     </table>

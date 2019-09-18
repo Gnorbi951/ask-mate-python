@@ -1,4 +1,5 @@
-from flask import Flask, request, render_template, redirect
+from flask import Flask, request, render_template, url_for, redirect
+import util
 import data_manager
 
 app = Flask(__name__)
@@ -16,10 +17,16 @@ def display_question(question_id: int):
     answer_data = data_manager.get_answers(question_id)
     if isinstance(answer_data, list):
         answer_data = {'message': 'No answer so far...'}
+    if isinstance(question_data, list):
+        return redirect('/error')
     return render_template('display_a_question.html',
                            question_data=question_data,
                            answer_data=answer_data
                            )
+
+@app.route('/error')
+def handle_exceptions():
+    return render_template('exception_handing.html')
 
 
 @app.route('/add-question', methods=['GET', 'POST'])
