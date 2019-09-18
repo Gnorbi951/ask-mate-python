@@ -32,8 +32,8 @@ def handle_exceptions():
 @app.route('/add-question', methods=['GET', 'POST'])
 def add_question():
     if request.method == 'POST':
-        site_input = request.form['title']
-        print(site_input)
+        site_input = [request.form['title'], request.form['message']]
+        data_manager.write_to_question_csv(site_input)
         return redirect('/')
     else:
         return render_template('add_a_question.html')
