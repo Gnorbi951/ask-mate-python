@@ -1,22 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Add question</title>
 </head>
-<body>
-            <form method="post">
-                <h1>Title of the question</h1>
-                <label>
-                    <textarea rows="1" cols="60" name="title"></textarea>
-                </label>
-                <p>Describe the question</p>
-                <label>
-                    <textarea rows="10" cols="50" name="message"></textarea>
-                </label>
+    <body>
+            <h1>Ask a question</h1>
+            <form action="/add-question" method="post">
 
+                <p><label for="title-input">Title of the queston:</label></p>
+                    <textarea rows="1" cols="60" name="title" id="title-input"></textarea>
 
-                <p><input type="submit" value="Ask question"></p>
+                <p><label for="message-input">Describe the question:</label></p>
+                    <textarea rows="10" cols="50" name="message" id="message-input"></textarea>
+
+                <p><button type="submit">Ask question</button></p>
             </form>
-</body>
+    </body>
 </html>
