@@ -35,7 +35,7 @@ def get_answers(question_id=None):
             return answers
     return csv_data
 
-get_answers(0)
+
 def get_time():
     return str(int(time.time()))
 
@@ -78,7 +78,7 @@ def pass_answers_to_handler(site_input):
 
 
 def write_to_questions_csv(new_data):
-    fieldnames = ['id','submission_time','view_number','vote_number','title','message','image']
+    fieldnames = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
     new_dict = {}
     counter = 0
     for _ in new_data:
@@ -91,7 +91,7 @@ def write_to_questions_csv(new_data):
 
 
 def write_to_answers_csv(new_data):
-    fieldnames = ['id','submission_time','vote_number', 'question_id', 'message', 'image']
+    fieldnames = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
     new_dict = {}
     counter = 0
     for _ in new_data:
@@ -101,5 +101,3 @@ def write_to_answers_csv(new_data):
     with open('sample_data/answer.csv', 'a') as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writerow(new_dict)
-
-
