@@ -30,9 +30,11 @@
     </table>
     <table>
         <h1>Answers:</h1>
+        {% for answer in answer_data %}
         <tr>
-            <td>{{ answer_data.get('message') }}</td>
+            <td>{{ answer }}</td>
         </tr>
+        {% endfor %}
     </table>
 </body>
 </html>

@@ -18,21 +18,24 @@ def get_questions(id=None):
     return csv_data[::-1]
 
 
-def get_answers(id=None):
+def get_answers(question_id=None):
     """Get the data from the answers csv as an Ordered_Dict list"""
     csv_data = []
     with open('sample_data/answer.csv') as f:
         reader = csv.DictReader(f)
+        answers = []
         for row in reader:
             d = dict(row)
-            if id is not None and id == d['id']:
-                return d
+            if str(question_id) is not None and str(question_id) == d['question_id']:
+                answers.append(d['message'])
 
             csv_data.append(d)
 
+        if question_id is not None:
+            return answers
     return csv_data
 
-
+get_answers(0)
 def get_time():
     return str(int(time.time()))
 
