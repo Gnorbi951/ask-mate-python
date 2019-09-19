@@ -40,8 +40,8 @@ def get_time():
     return str(int(time.time()))
 
 
-def get_question_max_id():
-    with open('sample_data/questions.csv') as f:
+def get_question_max_id(filename):
+    with open(filename) as f:
         read = csv.DictReader(f)
         max_id = '0'
         for row in read:
@@ -51,7 +51,7 @@ def get_question_max_id():
 
 
 def pass_question_to_handler(site_input):
-    id = str(int(get_question_max_id()) + 1)
+    id = str(int(get_question_max_id('sample_data/questions.csv')) + 1)
     submission_time = get_time()
     view_number = '0'
     vote_number = '0'
@@ -65,17 +65,16 @@ def pass_question_to_handler(site_input):
 
 
 def pass_answers_to_handler(site_input):
-    id = str(int(get_question_max_id()) + 1)
+    id = str(int(get_question_max_id('sample_data/answer.csv')) + 1)
+    question_id = site_input[0]
     submission_time = get_time()
-    view_number = '0'
     vote_number = '0'
-    title = site_input[0]
     message = site_input[1]
     image = 'No image'
     return_value = [id, submission_time,
-                    view_number, vote_number,
-                    title, message, image]
-    write_to_questions_csv(return_value)
+                    vote_number, question_id,
+                    message, image]
+    write_to_answers_csv(return_value)
 
 
 def write_to_questions_csv(new_data):

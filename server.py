@@ -28,8 +28,8 @@ def display_question(question_id: int):
 @app.route('/question/<answer_id>/new-answer', methods=['GET', 'POST'])
 def answer_question(answer_id: int):
     if request.method == 'POST':
-
-        print(request.form['new-answer'])
+        data_manager.pass_answers_to_handler([answer_id, request.form['new-answer']])
+        return redirect('/')
     return render_template('add_answer.html')
 
 
