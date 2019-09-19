@@ -17,6 +17,7 @@
                 <th>Vote Number:</th>
                 <th>Title:</th>
                 <th>Message:</th>
+                <th>Answer question:</th>
             </tr>
         </thead>
         <tr>
@@ -26,6 +27,7 @@
             <td>{{ question_data.get('vote_number') }}</td>
             <td>{{ question_data.get('title') }}</td>
             <td>{{ question_data.get('message') }}</td>
+            <td><a href="/question/{{ question_data.get('id') }}/new-answer">Answer question</a></td>
         </tr>
     </table>
     <table>

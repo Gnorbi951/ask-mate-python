@@ -25,6 +25,15 @@ def display_question(question_id: int):
                            )
 
 
+@app.route('/question/<answer_id>/new-answer', methods=['GET', 'POST'])
+def answer_question(answer_id: int):
+    if request.method == 'POST':
+
+        print(request.form['new-answer'])
+    return render_template('add_answer.html')
+
+
+
 def count_view_number(question_id: int):
     count = 0
     if request.method == "GET":
