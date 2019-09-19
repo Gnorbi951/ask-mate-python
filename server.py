@@ -32,13 +32,6 @@ def answer_question(answer_id: int):
     return render_template('add_answer.html')
 
 
-
-def count_view_number(question_id: int):
-    count = 0
-    if request.method == "GET":
-        return count
-
-
 @app.route('/error')
 def handle_exceptions():
     return render_template('exception_handing.html')
