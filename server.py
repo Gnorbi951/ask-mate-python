@@ -1,5 +1,4 @@
-from flask import Flask, request, render_template, url_for, redirect
-import util
+from flask import Flask, request, render_template, redirect
 import data_manager
 
 app = Flask(__name__)
@@ -33,13 +32,6 @@ def answer_question(answer_id: int):
     return render_template('add_answer.html')
 
 
-
-def count_view_number(question_id: int):
-    count = 0
-    if request.method == "GET":
-        return count
-
-
 @app.route('/error')
 def handle_exceptions():
     return render_template('exception_handing.html')
@@ -58,5 +50,7 @@ def add_question():
 if __name__ == '__main__':
     app.run(
         debug=True,
-        port=8080
+        port=8080,
+        host='192.168.1.71',
+
     )
