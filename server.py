@@ -6,10 +6,12 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def list_questions():
-    data = data_manager.test()
+    data = data_manager.get_least_questions()
+
     return render_template('list.html', data=data)
 
 
+"""
 @app.route('/question/<question_id>')
 def display_question(question_id: int):
     question_data = data_manager.get_questions(question_id)
@@ -44,11 +46,9 @@ def add_question():
     site_input = [request.form['title'], request.form['message']]
     data_manager.pass_question_to_handler(site_input)
     return redirect('/')
-
+"""
 
 if __name__ == '__main__':
     app.run(
-        debug=True,
-        port=8080,
-
+        debug=True
     )
