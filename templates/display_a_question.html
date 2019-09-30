@@ -27,7 +27,7 @@
             <td>{{ question_data.get('vote_number') }}</td>
             <td>{{ question_data.get('title') }}</td>
             <td>{{ question_data.get('message') }}</td>
-            <td><a href="/question/{{ question_data.get('id') }}/new-answer">Answer question</a></td>
+            <td><a href="{{ url_for(".answer_question", answer_id=question_data.get('id')) }}">Answer question</a></td>
         </tr>
     </table>
     <table>

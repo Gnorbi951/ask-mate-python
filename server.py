@@ -20,15 +20,14 @@ def display_question(question_id: int):
         return redirect('/error')
     return render_template('display_a_question.html',
                            question_data=question_data,
-                           answer_data=answer_data
-                           )
+                           answer_data=answer_data)
 
 
 @app.route('/question/<answer_id>/new-answer', methods=['GET', 'POST'])
 def answer_question(answer_id: int):
     if request.method == 'POST':
         data_manager.pass_answers_to_handler([answer_id, request.form['new-answer']])
-        return redirect('/')
+        return redirect('/') #It should redirect to display question and not homepage.
     return render_template('add_answer.html')
 
 
@@ -39,12 +38,12 @@ def handle_exceptions():
 
 @app.route('/add-question', methods=['GET', 'POST'])
 def add_question():
-    if request.method == 'POST':
-        site_input = [request.form['title'], request.form['message']]
-        data_manager.pass_question_to_handler(site_input)
-        return redirect('/')
-    else:
+    if request.method == 'GET':
         return render_template('add_a_question.html')
+
+    site_input = [request.form['title'], request.form['message']]
+    data_manager.pass_question_to_handler(site_input)
+    return redirect('/')
 
 
 if __name__ == '__main__':
