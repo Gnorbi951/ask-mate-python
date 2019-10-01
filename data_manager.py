@@ -45,3 +45,14 @@ def get_answers_for_questions(cursor, question_id):
                    {'question_id': question_id})
     question_answers = cursor.fetchall()
     return question_answers
+
+
+@connection.connection_handler
+def get_question_by_id(cursor, question_id):
+    cursor.execute("""
+                    SELECT * FROM question
+                    WHERE id = %(question_id)s;
+                    """,
+                   {'question_id': question_id})
+    question_details = cursor.fetchall()
+    return question_details
