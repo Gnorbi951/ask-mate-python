@@ -11,10 +11,14 @@ def get_least_questions(cursor):
 
 
 @connection.connection_handler
-def search(search_phrase, cursor):
-    cursor.execute(f"""
-                        SELECT title FROM question WHERE title LIKE %{search_phrase}%;
-                    """)
+def search(cursor, search_phrase):
+    search_phrase = '%' + search_phrase + '%'
+    cursor.execute("""
+                        SELECT title FROM question
+                        WHERE title LIKE %(search_phrase)s 
+                        OR message LIKE %(search_phrase)s;
+                    """, #We need also search in answers
+                   {'search_phrase': search_phrase})
     search_phrase = cursor.fetchall()
     return search_phrase
 

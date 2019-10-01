@@ -7,8 +7,12 @@ app = Flask(__name__)
 @app.route('/', methods=['GET', 'POST'])
 def list_questions():
     data = data_manager.get_least_questions()
-
     return render_template('index.html', data=data)
+
+@app.route('/search')
+def search():
+    search_result = data_manager.search(*request.args.values())
+    return render_template('search.html', search_result=search_result)
 
 
 @app.route('/list')
@@ -43,6 +47,7 @@ def add_question():
     site_input = [request.form['title'], request.form['message']]
     data_manager.add_question(site_input)
     return redirect('/')
+
 
 
 """
