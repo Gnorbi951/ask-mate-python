@@ -1,5 +1,4 @@
 import connection
-import common
 
 @connection.connection_handler
 def get_least_questions(cursor):
@@ -47,8 +46,6 @@ def get_answers_for_questions(cursor, question_id):
     question_answers = cursor.fetchall()
     return question_answers
 
-
-@connection.connection_handler
 def add_question(cursor,site_input):
     values=[common.get_id(),common.get_submission_time(),0,0,site_input[0],site_input[1],'']
 

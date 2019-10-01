@@ -7,6 +7,10 @@
 <body>
     <h1>Details of the question</h1>
     <div class="comments">
+    {% for data in question_data %}
+        <h2>{{ data.title }}</h2>
+        <h4>{{ data.message }}</h4>
+    {% endfor %}
         <h2>Comments to question</h2>
         {% for comment in question_comment %}
             <ul>
