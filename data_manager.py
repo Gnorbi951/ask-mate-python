@@ -18,3 +18,14 @@ def get_all_questions(cursor):
                     SELECT * FROM question;""")
     question_list = cursor.fetchall()
     return question_list
+
+
+@connection.connection_handler
+def get_comments_for_question(cursor, question_id):
+    cursor.execute("""
+                    SELECT message from comment
+                    WHERE %(question_id)s = question_id;
+                    """,
+                   {'question_id': question_id})
+    question_comments = cursor.fetchall()
+    return question_comments

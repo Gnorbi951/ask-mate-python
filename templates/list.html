@@ -13,12 +13,13 @@
         {% for data in question_list %}
             <tr>
                 <td>{{ data.id }}</td>
-                <td>{{ data.title }}</td>
+                <td><a href="{{ url_for('show_specific_question', question_id = data.id) }}">{{ data.title }}</a></td>
                 <td>{{ data.message }}</td>
                 <td>{{ data.view_number }}</td>
                 <td>{{ data.vote_number }}</td>
             </tr>
         {% endfor %}
     </table>
+<a href="/">Back to homepage</a>
 </body>
 </html>

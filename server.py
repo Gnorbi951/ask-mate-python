@@ -16,6 +16,12 @@ def show_all_questions():
     question_list = data_manager.get_all_questions()
     return render_template('list.html', question_list=question_list)
 
+
+@app.route('/question/<question_id>')
+def show_specific_question(question_id: int):
+    question_comment = data_manager.get_comments_for_question(question_id)
+    return render_template('question_details.html', question_comment=question_comment)
+
 """
 @app.route('/question/<question_id>')
 def display_question(question_id: int):
