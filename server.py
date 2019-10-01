@@ -20,7 +20,9 @@ def show_all_questions():
 @app.route('/question/<question_id>')
 def show_specific_question(question_id: int):
     question_comment = data_manager.get_comments_for_question(question_id)
-    return render_template('question_details.html', question_comment=question_comment)
+    question_answer = data_manager.get_answers_for_questions(question_id)
+    return render_template('question_details.html', question_comment=question_comment,
+                           question_answer=question_answer)
 
 """
 @app.route('/question/<question_id>')

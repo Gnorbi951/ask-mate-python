@@ -29,3 +29,14 @@ def get_comments_for_question(cursor, question_id):
                    {'question_id': question_id})
     question_comments = cursor.fetchall()
     return question_comments
+
+
+@connection.connection_handler
+def get_answers_for_questions(cursor, question_id):
+    cursor.execute("""
+                    SELECT message FROM answer
+                    WHERE question_id = %(question_id)s;
+                    """,
+                   {'question_id': question_id})
+    question_answers = cursor.fetchall()
+    return question_answers
