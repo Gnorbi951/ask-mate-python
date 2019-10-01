@@ -8,8 +8,13 @@ app = Flask(__name__)
 def list_questions():
     data = data_manager.get_least_questions()
 
-    return render_template('list.html', data=data)
+    return render_template('index.html', data=data)
 
+
+@app.route('/list')
+def show_all_questions():
+    question_list = data_manager.get_all_questions()
+    return render_template('list.html', question_list=question_list)
 
 """
 @app.route('/question/<question_id>')
