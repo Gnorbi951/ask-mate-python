@@ -10,11 +10,10 @@ def list_questions():
     return render_template('index.html', data=data)
 
 
-@app.route('/list/search=<search_phrase>')
-def search(search_phrase):
-    search_result = data_manager.search(search_phrase)
-    print(data, search_phrase, search_result)
-    return render_template('list.html', search_result=search_result)
+@app.route('/search')
+def search():
+    search_result = data_manager.search(*request.args.values())
+    return render_template('search.html', search_result=search_result)
 
 
 @app.route('/list')
@@ -29,6 +28,7 @@ def show_specific_question(question_id: int):
     question_answer = data_manager.get_answers_for_questions(question_id)
     return render_template('question_details.html', question_comment=question_comment,
                            question_answer=question_answer)
+
 
 """
 @app.route('/question/<question_id>')
