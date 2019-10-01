@@ -11,6 +11,13 @@ def list_questions():
     return render_template('list.html', data=data)
 
 
+@app.route('/search?q=<search_phrase>', methods=['GET'])
+def search(search_phrase):
+    if request.method == 'GET':
+        data = data_manager.search(search_phrase)
+        print(data, search_phrase)
+    return render_template('list.html', search_result=data)
+
 """
 @app.route('/question/<question_id>')
 def display_question(question_id: int):
