@@ -9,6 +9,10 @@ def list_questions():
     data=data_manager.get_least_questions()
 
     return render_template('list.html',data=data)
+"""
+@app.route('/question/<question_id>/add-answer',methods=['GET', 'POST'])
+def add_answer():
+"""
 
 """
 @app.route('/question/<question_id>')
