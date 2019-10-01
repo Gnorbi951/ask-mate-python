@@ -16,7 +16,10 @@
             <ul>
                 <li>{{ comment.message }}</li>
             </ul>
-        {% endfor %}
+    {% endfor %}
+    {% for question_id in question_data %}
+    <a href="{{ url_for('add_new_comment', question_id = question_id.id ) }}">Add new comment</a>
+    {% endfor %}
     </div>
     <div class="answer">
         <h2>Answers to questions</h2>
