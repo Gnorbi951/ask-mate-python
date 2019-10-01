@@ -7,16 +7,28 @@ app = Flask(__name__)
 @app.route('/', methods=['GET', 'POST'])
 def list_questions():
     data = data_manager.get_least_questions()
+    return render_template('index.html', data=data)
 
-    return render_template('list.html', data=data)
 
-
-@app.route('/search?q=<search_phrase>', methods=['GET'])
+@app.route('/list/search=<search_phrase>')
 def search(search_phrase):
-    if request.method == 'GET':
-        data = data_manager.search(search_phrase)
-        print(data, search_phrase)
-    return render_template('list.html', search_result=data)
+    search_result = data_manager.search(search_phrase)
+    print(data, search_phrase, search_result)
+    return render_template('list.html', search_result=search_result)
+
+
+@app.route('/list')
+def show_all_questions():
+    question_list = data_manager.get_all_questions()
+    return render_template('list.html', question_list=question_list)
+
+
+@app.route('/question/<question_id>')
+def show_specific_question(question_id: int):
+    question_comment = data_manager.get_comments_for_question(question_id)
+    question_answer = data_manager.get_answers_for_questions(question_id)
+    return render_template('question_details.html', question_comment=question_comment,
+                           question_answer=question_answer)
 
 """
 @app.route('/question/<question_id>')
