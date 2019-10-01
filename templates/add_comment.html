@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Add comment</title>
-</head>
-<body>
+{% extends 'layout.html' %}
+{% block content %}
     <h1>Add a comment</h1>
     {% for data in question_data %}
         <a>{{ data.title }}</a><br>
@@ -17,5 +12,4 @@
     </form>
     {{ status }}
     <a href="/list">Back</a>
-</body>
-</html>
+{% endblock %}

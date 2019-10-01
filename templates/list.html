@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>All questions</title>
-</head>
-<body>
+{% extends 'layout.html' %}
+{% block content %}
     <h1>
         Ask Mate
     </h1>
@@ -30,5 +25,4 @@
     </table>
     <p><a href="{{ url_for('add_question') }}">Add question</a><p>
     <p><a href="/">Back to homepage</a></p>
-</body>
-</html>
+{% endblock %}
