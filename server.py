@@ -25,6 +25,16 @@ def show_specific_question(question_id: int):
     return render_template('question_details.html', question_comment=question_comment,
                            question_answer=question_answer, question_data=question_data)
 
+
+
+@app.route('/question/<question_id>/new-comment', methods=['GET', 'POST'])
+def add_new_comment(question_id: int):
+    question_data = data_manager.get_question_by_id(question_id)
+    if request.method == 'POST':
+        pass
+    return render_template('add_comment.html', question_data=question_data)
+
+
 @app.route('/add-question', methods=['GET', 'POST'])
 def add_question():
     if request.method == 'GET':
