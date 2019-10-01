@@ -1,7 +1,4 @@
-import time
 import connection
-import common
-
 
 @connection.connection_handler
 def get_least_questions(cursor):
@@ -11,6 +8,14 @@ def get_least_questions(cursor):
     table = cursor.fetchall()
     return table
 
+
+@connection.connection_handler
+def search(search_phrase, cursor):
+    cursor.execute(f"""
+                        SELECT title FROM question WHERE title LIKE %{search_phrase}%;
+                    """)
+    search_phrase = cursor.fetchall()
+    return search_phrase
 
 @connection.connection_handler
 def get_all_questions(cursor):
@@ -40,41 +45,3 @@ def get_answers_for_questions(cursor, question_id):
                    {'question_id': question_id})
     question_answers = cursor.fetchall()
     return question_answers
-
-
-@connection.connection_handler
-def add_question(cursor, site_input):
-    title, message = 0, 1
-    new_id = common.get_id()
-    current_id = new_id[0].get('max')
-    current_id += 1
-    sub_time = common.get_submission_time()
-    values = [current_id, sub_time, 0, 0, site_input[title], site_input[message], 'No image']
-
-    cursor.execute("""
-                    INSERT INTO question(id,submission_time,view_number,vote_number,title,message,image)
-                    VALUES(%(id)s, %(sub_time)s, %(view_number)s,
-                            %(vote_number)s, %(title)s, %(message)s, %(image)s); 
-                    """,
-                   {'id': values[0],
-                    'sub_time': values[1],
-                    'view_number': values[2],
-                    'vote_number': values[3],
-                    'title': values[4],
-                    'message': values[5],
-                    'image': values[6]})
-
-#outsorce this
-'''
-def get_submission_time():
-    return time.time()
-
-def get_id():#sql_table
-    cursor.execute("""
-                    SELECT id FROM question ORDER BY desc LIMIT 1
-    
-                    """)
-    id=cursor.fetchall()
-    return id+1
-'''
-#outsorce this
