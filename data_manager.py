@@ -1,7 +1,4 @@
-import csv
-import time
 import connection
-
 
 @connection.connection_handler
 def get_least_questions(cursor):
@@ -11,6 +8,14 @@ def get_least_questions(cursor):
     table = cursor.fetchall()
     return table
 
+
+@connection.connection_handler
+def search(search_phrase, cursor):
+    cursor.execute(f"""
+                        SELECT title FROM question WHERE title LIKE %{search_phrase}%;
+                    """)
+    search_phrase = cursor.fetchall()
+    return search_phrase
 
 @connection.connection_handler
 def get_all_questions(cursor):

@@ -5,6 +5,19 @@
     <title>All questions</title>
 </head>
 <body>
+    <h1>
+        Ask Mate
+    </h1>
+    <form method="get">
+        <label for="search"></label>
+        <input type="text" name="search" id="search">
+        <input type="submit" name="search" id="search" value="Search">
+    </form>
+    <ul>
+        {% for element in search_result %}
+        <li>{{ element }}</li>
+        {% endfor %}
+    </ul>
     <h1>All of the questions</h1>
     <table>
         <th>ID:</th><th>Title:</th>
@@ -20,6 +33,6 @@
             </tr>
         {% endfor %}
     </table>
-<a href="/">Back to homepage</a>
+    <p><a href="/">Back to homepage</a></p>
 </body>
 </html>
