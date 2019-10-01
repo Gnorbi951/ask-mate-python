@@ -24,6 +24,16 @@ def show_specific_question(question_id: int):
     return render_template('question_details.html', question_comment=question_comment,
                            question_answer=question_answer)
 
+@app.route('/add-question', methods=['GET', 'POST'])
+def add_question():
+    if request.method == 'GET':
+        return render_template('add_a_question.html')
+
+    site_input = [request.form['title'], request.form['message']]
+    data_manager.add_question(site_input)
+    return redirect('/')
+
+
 """
 @app.route('/question/<question_id>')
 def display_question(question_id: int):
@@ -51,14 +61,7 @@ def handle_exceptions():
     return render_template('exception_handing.html')
 
 
-@app.route('/add-question', methods=['GET', 'POST'])
-def add_question():
-    if request.method == 'GET':
-        return render_template('add_a_question.html')
 
-    site_input = [request.form['title'], request.form['message']]
-    data_manager.pass_question_to_handler(site_input)
-    return redirect('/')
 """
 
 if __name__ == '__main__':
