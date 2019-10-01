@@ -5,11 +5,6 @@
     <title>Search</title>
 </head>
 <body>
-    <form method="get" action="search">
-        <label for="search" >Search</label>
-        <input type="text" name="q" id="q">
-        <button type="submit">Search</button>
-    </form>
     <ul>
         {% for element in search_result %}
         <li>{{ element }}</li>

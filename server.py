@@ -9,7 +9,6 @@ def list_questions():
     data = data_manager.get_least_questions()
     return render_template('index.html', data=data)
 
-
 @app.route('/search')
 def search():
     search_result = data_manager.search(*request.args.values())
@@ -24,10 +23,31 @@ def show_all_questions():
 
 @app.route('/question/<question_id>')
 def show_specific_question(question_id: int):
+    question_data = data_manager.get_question_by_id(question_id)
     question_comment = data_manager.get_comments_for_question(question_id)
     question_answer = data_manager.get_answers_for_questions(question_id)
     return render_template('question_details.html', question_comment=question_comment,
-                           question_answer=question_answer)
+                           question_answer=question_answer, question_data=question_data)
+
+
+
+@app.route('/question/<question_id>/new-comment', methods=['GET', 'POST'])
+def add_new_comment(question_id: int):
+    question_data = data_manager.get_question_by_id(question_id)
+    if request.method == 'POST':
+        pass
+    return render_template('add_comment.html', question_data=question_data)
+
+
+@app.route('/add-question', methods=['GET', 'POST'])
+def add_question():
+    if request.method == 'GET':
+        return render_template('add_a_question.html')
+
+    site_input = [request.form['title'], request.form['message']]
+    data_manager.add_question(site_input)
+    return redirect('/')
+
 
 
 """
@@ -57,14 +77,7 @@ def handle_exceptions():
     return render_template('exception_handing.html')
 
 
-@app.route('/add-question', methods=['GET', 'POST'])
-def add_question():
-    if request.method == 'GET':
-        return render_template('add_a_question.html')
 
-    site_input = [request.form['title'], request.form['message']]
-    data_manager.pass_question_to_handler(site_input)
-    return redirect('/')
 """
 
 if __name__ == '__main__':

@@ -11,14 +11,14 @@
     <table>
         <thead>
             <tr>
-                <th>ID:</th>
                 <th>Title:</th>
+                <th>Message:</th>
             </tr>
         </thead>
         {% for value in data %}
         <tr>
-            <td>{{value['id'] }}</td>
-            <td><a>{{ value.title }}</a></td>
+            <td>{{value.title }}</td>
+            <td>{{ value.message }}</td>
         </tr>
         {% endfor %}
     </table>
