@@ -1,10 +1,10 @@
-import time
+import datetime
 import connection
 
 
 def get_submission_time():
-    current_time = time.time()
-    return int(current_time)
+
+    return datetime.date.today()
 
 
 @connection.connection_handler
@@ -14,4 +14,5 @@ def get_id(cursor):  # sql_table
 
                     """)
     max_id = cursor.fetchall()
-    return max_id
+    #print('max_id:'+(max_id.get('max')+1))
+    return max_id[0].get('max')+1
