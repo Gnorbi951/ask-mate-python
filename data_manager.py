@@ -86,6 +86,24 @@ def add_question(cursor, site_input):
 
 
 @connection.connection_handler
+def add_answer(cursor, site_input, question_id):
+    values = [common.get_submission_time(), 0, question_id[0], site_input, '']
+
+    cursor.execute("""
+                      INSERT INTO answer(submission_time,vote_number,question_id,message,image)
+                      VALUES (%(submission_time)s,%(vote_number)s,%(question_id)s,%(message)s,%(image)s)
+                    """,
+                   {
+                       'submission_time': values[0],
+                       'vote_number': values[1],
+                       'question_id': values[2],
+                       'message': values[3],
+                       'image': values[4]
+                   }
+                   )
+
+
+@connection.connection_handler
 def add_comment(cursor, server_input):
     id_, comment, instance = 0, 1, 2
     if server_input[instance] == 'question':

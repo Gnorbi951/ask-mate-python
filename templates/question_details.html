@@ -23,6 +23,9 @@
                 <li>{{ answer.message }}</li>
             </ul>
         {% endfor %}
+    {% for question_id in question_data %}
+    <a href="{{ url_for('add_answer', question_id = question_id.id ) }}">Add new answer</a>
+    {% endfor %}
     </div>
     <a href="/list">Back</a>
 {% endblock %}
