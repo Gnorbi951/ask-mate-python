@@ -1,9 +1,11 @@
 {% extends 'layout.html' %}
 {% block content %}
+    <div id="main_page_header">
     <h1>
         Ask Mate
     </h1>
-    <table>
+    </div>
+    <table class="main_table">
         <thead>
             <tr>
                 <th>Title:</th>
@@ -11,10 +13,9 @@
             </tr>
         </thead>
         {% for value in data %}
-        <tr>
-            <td>{{value.title }}</td>
-            <td>{{ value.message }}</td>
-        </tr>
+            <tr>
+                <td>{{value.title }}</td>
+                <td>{{ value.message }}</td>
         {% endfor %}
     </table>
     <form>
