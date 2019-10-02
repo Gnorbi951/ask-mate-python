@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Question Details</title>
-</head>
-<body>
+{% extends 'layout.html' %}
+{% block content %}
     <h1>Details of the question</h1>
     <div class="comments">
     {% for data in question_data %}
@@ -18,7 +13,7 @@
             </ul>
     {% endfor %}
     {% for question_id in question_data %}
-    <a href="{{ url_for('add_new_comment', question_id = question_id.id ) }}">Add new comment</a>
+    <a href="{{ url_for('add_new_comment_to_question', question_id = question_id.id ) }}">Add new comment</a>
     {% endfor %}
     </div>
     <div class="answer">
@@ -30,5 +25,4 @@
         {% endfor %}
     </div>
     <a href="/list">Back</a>
-</body>
-</html>
+{% endblock %}

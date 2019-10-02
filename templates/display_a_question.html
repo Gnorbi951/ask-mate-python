@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>A question</title>
-</head>
-<body>
+{% extends 'layout.html' %}
+{% block content %}
     <h1>
         Question:
     </h1>
@@ -38,5 +33,4 @@
         </tr>
         {% endfor %}
     </table>
-</body>
-</html>
+{% endblock %}

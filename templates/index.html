@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Ask Mate</title>
-</head>
-<body>
+{% extends 'layout.html' %}
+{% block content %}
     <h1>
         Ask Mate
     </h1>
@@ -25,5 +20,4 @@
     <form>
         <p><a href="{{ url_for('show_all_questions') }}">Show all questions</a></p>
     </form>
-</body>
-</html>
+{% endblock %}

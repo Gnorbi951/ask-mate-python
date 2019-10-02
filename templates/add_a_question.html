@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
-<head>
-    <meta charset="UTF-8">
-    <title>Add question</title>
-</head>
-    <body>
+{% extends 'layout.html' %}
+{% block content %}
+
             <h1>Ask a question</h1>
             <form action="/add-question" method="post">
 
@@ -16,5 +12,4 @@
 
                 <p><button type="submit">Ask question</button></p>
             </form>
-    </body>
-</html>
+{% endblock %}

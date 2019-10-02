@@ -9,6 +9,7 @@ def list_questions():
     data = data_manager.get_least_questions()
     return render_template('index.html', data=data)
 
+
 @app.route('/search')
 def search():
     search_result = data_manager.search(*request.args.values())
@@ -30,13 +31,16 @@ def show_specific_question(question_id: int):
                            question_answer=question_answer, question_data=question_data)
 
 
-
 @app.route('/question/<question_id>/new-comment', methods=['GET', 'POST'])
-def add_new_comment(question_id: int):
+def add_new_comment_to_question(question_id: int):
     question_data = data_manager.get_question_by_id(question_id)
+    status = ''
     if request.method == 'POST':
-        pass
-    return render_template('add_comment.html', question_data=question_data)
+        comment = request.form['comment']
+        data_to_manager = [question_id, comment, 'question']
+        data_manager.add_comment(data_to_manager)
+        status = 'Comment added successfully'
+    return render_template('add_comment.html', question_data=question_data, status=status)
 
 
 @app.route('/add-question', methods=['GET', 'POST'])
@@ -47,7 +51,6 @@ def add_question():
     site_input = [request.form['title'], request.form['message']]
     data_manager.add_question(site_input)
     return redirect('/')
-
 
 
 """
