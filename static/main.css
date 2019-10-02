@@ -27,7 +27,7 @@ h1 {
     background-color: #848efa;
     color: black;
     text-align: left;
-    font-size: 24px;
+    font-size: 26px;
     font-weight: bold;
 
 }
@@ -39,7 +39,7 @@ h1 {
 }
 
 .main_table tbody tr:nth-of-type(even) {
-    background-color: #b0face;
+    background-color: #7bb8fa;
 
 }
 

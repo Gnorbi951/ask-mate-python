@@ -27,9 +27,7 @@
                 <a href="{{ url_for('add_new_comment_to_answer', answer_id = answer.id ) }}">Add new comment</a>
             {% endfor %}
         {% endfor %}
-    {% for question_id in question_data %}
-    <a href="{{ url_for('add_answer', question_id = question_id.id ) }}">Add new answer</a>
-    {% endfor %}
+    <a href="{{ url_for('add_answer', question_id = question_data[0].id ) }}">Add new answer</a>
     </div>
     <a href="/list">Back</a>
 {% endblock %}
