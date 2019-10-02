@@ -60,6 +60,14 @@ def add_new_comment_to_answer(answer_id: int):
 '''                         question_id=question_id[0]'''
 
 
+@app.route('/question/<question_id>/add-answer', methods=['GET', 'POST'])
+def add_answer(question_id: int):
+    if request.method == 'POST':
+        site_input = request.form['new-answer']  # check
+        data_manager.add_answer(site_input, question_id)  # check
+    return render_template('add_answer.html',question_id=question_id)
+
+
 @app.route('/add-question', methods=['GET', 'POST'])
 def add_question():
     if request.method == 'GET':
@@ -68,6 +76,9 @@ def add_question():
     site_input = [request.form['title'], request.form['message']]
     data_manager.add_question(site_input)
     return redirect('/')
+
+
+
 
 
 """
