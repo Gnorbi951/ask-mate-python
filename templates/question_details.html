@@ -19,9 +19,13 @@
     <div class="answer">
         <h2>Answers to questions</h2>
         {% for answer in question_answer %}
-            <ul>
-                <li>{{ answer.message }}</li>
-            </ul>
+            {% for comment in answer_comment %}
+            <dl>
+                <dt>{{ answer.message }}</dt>
+                <dd>{{ comment.message }}</dd>
+            </dl>
+                <a href="{{ url_for('add_new_comment_to_answer', answer_id = answer.id ) }}">Add new comment</a>
+            {% endfor %}
         {% endfor %}
     </div>
     <a href="/list">Back</a>
