@@ -17,7 +17,6 @@
                 <th>Vote number:</th>
             </tr>
         </thead>
-        <tbody>
         {% for data in question_list %}
             <tr>
                 <td>{{ data.id }}</td>
@@ -26,7 +25,6 @@
                 <td>{{ data.view_number }}</td>
                 <td>{{ data.vote_number }}</td>
             </tr>
-        </tbody>
         {% endfor %}
     </table>
     <p><a href="{{ url_for('add_question') }}">Add question</a><p>
