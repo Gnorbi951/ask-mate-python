@@ -18,7 +18,7 @@ def search(cursor, search_phrase):
                         SELECT title FROM question
                         WHERE title LIKE %(search_phrase)s 
                         OR message LIKE %(search_phrase)s;
-                    """,  # We need also search in answers
+                    """,
                    {'search_phrase': search_phrase})
     search_phrase = cursor.fetchall()
     return search_phrase
@@ -43,7 +43,7 @@ def get_comments_for_question(cursor, question_id):
     return question_comments
 
 
-@connection.connection_handler
+'''@connection.connection_handler
 def get_comments_for_answer(cursor, answer_id):
     cursor.execute("""
                     SELECT answer.message, comment.message AS comment, answer.id FROM answer
@@ -52,7 +52,7 @@ def get_comments_for_answer(cursor, answer_id):
                     """,
                    {'answer_id': answer_id})
     answer_comment = cursor.fetchall()
-    return answer_comment
+    return answer_comment'''
 
 
 @connection.connection_handler

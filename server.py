@@ -27,11 +27,10 @@ def show_specific_question(question_id: int):
     question_data = data_manager.get_question_by_id(question_id)
     question_comment = data_manager.get_comments_for_question(question_id)
     question_answer = data_manager.get_answers_for_questions(question_id)
-    answer_comment = data_manager.get_comments_for_answer(question_id)
-    print(answer_comment)
+    #answer_comment = data_manager.get_comments_for_answer(question_id)
+    print(question_answer)
     return render_template('question_details.html', question_comment=question_comment,
-                           question_answer=question_answer, question_data=question_data,
-                           answer_comment=answer_comment)
+                           question_answer=question_answer, question_data=question_data)
 
 
 @app.route('/question/<question_id>/new-comment', methods=['GET', 'POST'])

@@ -18,18 +18,12 @@
     </div>
     <div class="answer">
         <h2>Answers to questions</h2>
-        <dl>
-            {% for data in answer_comment %}
-                <dt>{{ data.comment }}</dt>
-                    <a href="{{ url_for('edit_answer',answer_id=data.id) }}">Edit answer</a>
-                    <p><a href="{{ url_for('add_new_comment_to_answer', answer_id = data.id ) }}">Add new comment</a></p>
+        <ul>
+            {% for data in question_answer %}
+                <li>{{ data.message }}</li>
+                <a href="{{ url_for('edit_answer',answer_id=data.id) }}">Edit answer</a>
             {% endfor %}
-                <dd>{{ answer_comment[0].message }}</dd>
-                <dd>{{ answer_comment[1].message }}</dd>
-                <dd>{{ answer_comment[2].message }}</dd>
-                <dd>{{ answer_comment[3].message }}</dd>
-                <dd>{{ answer_comment[4].message }}</dd>
-        </dl>
+        </ul>
         <a href="{{ url_for('add_answer', question_id = question_data[0].id ) }}">Add new answer</a>
     </div>
     <a href="/list">Back</a>
