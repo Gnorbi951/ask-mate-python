@@ -20,12 +20,17 @@
         <h2>Answers to questions</h2>
         {% for answer in question_answer %}
             <ul>
-                <li>{{ answer.message }}</li>
+                <li>{{ answer.message }} </li>
             </ul>
         {% endfor %}
+        {% for answer_id in answer_data %}
+            <a href="{{ url_for('edit_answer', answer_id=answer_id.id) }}">Edit Answer</a>
+        {% endfor %}
+    
     {% for question_id in question_data %}
     <a href="{{ url_for('add_answer', question_id = question_id.id ) }}">Add new answer</a>
     {% endfor %}
+
     </div>
     <a href="/list">Back</a>
 {% endblock %}

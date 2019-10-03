@@ -55,6 +55,16 @@ def get_answers_for_questions(cursor, question_id):
 
 
 @connection.connection_handler
+def get_answer_id(cursor, answer_message):
+    cursor.execute("""
+                    SELECT * FROM answer
+                    WHERE message = %(answer_message)s;
+                    """,
+                   {'answer_message':answer_message})
+    answer_details = cursor.fetchall()
+    return answer_details
+
+@connection.connection_handler
 def get_question_by_id(cursor, question_id):
     cursor.execute("""
                     SELECT * FROM question
@@ -101,6 +111,19 @@ def add_answer(cursor, site_input, question_id):
                        'image': values[4]
                    }
                    )
+
+
+@connection.connection_handler
+def add_answer(cursor, site_input, answer_id):
+
+    cursor.execute("""
+                    UPDATE answer SET message=%(new_message)s WHERE id=%(answer_id)s;
+                    """,
+                   {
+                       'new_message':site_input,
+                       'answer_id':answer_id
+                   })
+
 
 
 @connection.connection_handler

@@ -1,10 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'layout.html' %}
+{% block content %}
+    <h1>
+        Add your answer:
+    </h1>
+    <form method="post">
+        <label for="new-answer">Your answer:</label><br>
+        <textarea rows="15" cols="50" name="new-answer" id="new-answer"></textarea><br>
+        <input type="submit" value="Answer question">
+    </form>
+    <a href="/list">Go back to questions</a>
+{% endblock %}>
