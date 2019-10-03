@@ -64,20 +64,20 @@ def add_new_comment_to_answer(answer_id: int):
 @app.route('/question/<question_id>/add-answer', methods=['GET', 'POST'])
 def add_answer(question_id: int):
     if request.method == 'POST':
-        site_input = request.form['new-answer']  # check
-        data_manager.add_answer(site_input, question_id)  # check
+        site_input = request.form['new-answer']
+        data_manager.add_answer(site_input, question_id)
     return render_template('add_answer.html',question_id=question_id)
 
 
-@app.route('/answer/<answer_id>/edit', methods=['GET', 'POST'])#check
+@app.route('/answer/<answer_id>/edit', methods=['GET', 'POST'])
 def edit_answer(answer_id: int):
     answer_data=data_manager.get_answer_by_id(answer_id)
     if request.method == 'POST':
         site_input = [request.form['new-answer']]
         site_input.append(answer_id)
-        print(site_input)
         data_manager.edit_answer(site_input)
-    return render_template('add_answer.html',answer_data=answer_data)
+        return redirect('/list')
+    return render_template('edit_answer.html',answer_data=answer_data)
 
 
 @app.route('/add-question', methods=['GET','POST'])

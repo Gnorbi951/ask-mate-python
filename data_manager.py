@@ -46,7 +46,7 @@ def get_comments_for_question(cursor, question_id):
 @connection.connection_handler
 def get_comments_for_answer(cursor, answer_id):
     cursor.execute("""
-                    SELECT answer.message AS answer_message, comment.message, answer.id FROM answer
+                    SELECT answer.message, comment.message AS comment, answer.id FROM answer
                     INNER JOIN comment ON answer.id=comment.answer_id
                     WHERE %(answer_id)s = answer_id;
                     """,
@@ -155,17 +155,6 @@ def add_answer(cursor, site_input, question_id):
                        'question_id': values[2],
                        'message': values[3],
                        'image': values[4]})
-
-
-@connection.connection_handler
-def add_answer(cursor, site_input, answer_id):
-    cursor.execute("""
-                    UPDATE answer SET message=%(new_message)s WHERE id=%(answer_id)s;
-                    """,
-                   {
-                       'new_message': site_input,
-                       'answer_id': answer_id
-                   })
 
 
 @connection.connection_handler
