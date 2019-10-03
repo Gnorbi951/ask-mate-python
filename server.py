@@ -27,7 +27,9 @@ def show_specific_question(question_id: int):
     question_data = data_manager.get_question_by_id(question_id)
     question_comment = data_manager.get_comments_for_question(question_id)
     question_answer = data_manager.get_answers_for_questions(question_id)
-    answer_comment = data_manager.get_comments_for_answer(question_id)
+    answer_message = data_manager.get_answer_message(question_id)
+    answer_comment = data_manager.get_comments_for_answer(question_id, answer_message)
+    print(answer_comment)
     return render_template('question_details.html', question_comment=question_comment,
                            question_answer=question_answer, question_data=question_data,
                            answer_comment=answer_comment)
@@ -46,7 +48,7 @@ def add_new_comment_to_question(question_id: int):
                            question_id=question_id)
 
 
-@app.route('/answer/<answer_id>/new_comment', methods=['GET', 'POST'])
+@app.route('/answer/<answer_id>/new-comment', methods=['GET', 'POST'])
 def add_new_comment_to_answer(answer_id: int):
     answer_data = data_manager.get_answer_by_id(answer_id)
     #question_id = data_manager.get_question_id_by_answer_id(answer_id)
