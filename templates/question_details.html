@@ -2,33 +2,31 @@
 {% block content %}
     <h1>Details of the question</h1>
     <div class="comments">
-    {% for data in question_data %}
-        <h2>{{ data.title }}</h2>
-        <h4>{{ data.message }}</h4>
-    {% endfor %}
+        {% for data in question_data %}
+            <h2>{{ data.title }}</h2>
+            <h4>{{ data.message }}</h4>
+        {% endfor %}
         <h2>Comments to question</h2>
         {% for comment in question_comment %}
             <ul>
                 <li>{{ comment.message }}</li>
             </ul>
-    {% endfor %}
-    {% for question_id in question_data %}
-    <a href="{{ url_for('add_new_comment_to_question', question_id = question_id.id ) }}">Add new comment</a>
-    {% endfor %}
+        {% endfor %}
+        {% for question_id in question_data %}
+            <a href="{{ url_for('add_new_comment_to_question', question_id = question_id.id ) }}">Add new comment</a>
+        {% endfor %}
     </div>
     <div class="answer">
         <h2>Answers to questions</h2>
-        {% for answer in question_answer %}
-            <dl>
-                <dt>{{ answer.message }}</dt>
-            <a href="{{ url_for('edit_answer',answer_id=answer.id) }}">Edit answer</a>
-                <a href="{{ url_for('add_new_comment_to_answer', answer_id = answer.id ) }}">Add new comment</a>
-        {% endfor %}
-        {% for comment in answer_comment %}
-                <dd>{{ comment.message }}</dd>
-            </dl>
-        {% endfor %}
-    <a href="{{ url_for('add_answer', question_id = question_data[0].id ) }}">Add new answer</a>
+        <dl>
+            <dt>{{ answer_comment[0]['answer_message'] }}</dt>
+                <a href="{{ url_for('edit_answer',answer_id=answer_comment[0].id) }}">Edit answer</a>
+                <p><a href="{{ url_for('add_new_comment_to_answer', answer_id = answer_comment[0].id ) }}">Add new comment</a></p>
+            {% for data in answer_comment %}
+                <dd>{{ data.message }}</dd>
+            {% endfor %}
+        </dl>
+        <a href="{{ url_for('add_answer', question_id = question_data[0].id ) }}">Add new answer</a>
     </div>
     <a href="/list">Back</a>
 {% endblock %}
