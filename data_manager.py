@@ -97,16 +97,6 @@ def get_answer_by_question_id(cursor, question_id):
     answer_details = cursor.fetchall()
     return answer_details
 
-@connection.connection_handler
-def get_question_id_by_answer_id(cursor, answer_id):
-    cursor.execute("""
-                    SELECT question_id FROM answer
-                    WHERE question_id = %(answer_id)s;
-                    """,
-                   {'answer_id' : answer_id})
-    question_id = cursor.fetchall()
-    return question_id
-
 
 @connection.connection_handler
 def add_question(cursor, site_input):
@@ -141,9 +131,7 @@ def add_answer(cursor, site_input, question_id):
                        'vote_number': values[1],
                        'question_id': values[2],
                        'message': values[3],
-                       'image': values[4]
-                   }
-                   )
+                       'image': values[4]})
 
 
 @connection.connection_handler
@@ -173,7 +161,6 @@ def add_comment(cursor, server_input):
         submission_time = common.get_submission_time()
         message = server_input[comment]
         edited_count = None
-
         cursor.execute("""
                             INSERT INTO comment(question_id, answer_id, message,
                                                 submission_time, edited_count)
