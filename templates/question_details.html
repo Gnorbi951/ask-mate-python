@@ -21,6 +21,7 @@
         {% for answer in question_answer %}
             <dl>
                 <dt>{{ answer.message }}</dt>
+            <a href="{{ url_for('edit_answer',answer_id=answer.id) }}">Edit answer</a>
                 <a href="{{ url_for('add_new_comment_to_answer', answer_id = answer.id ) }}">Add new comment</a>
         {% endfor %}
         {% for comment in answer_comment %}

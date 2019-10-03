@@ -79,6 +79,17 @@ def get_answers_for_questions(cursor, question_id):
 
 
 @connection.connection_handler
+def get_answer_id(cursor, answer_message):
+    cursor.execute("""
+                    SELECT * FROM answer
+                    WHERE message = %(answer_message)s;
+                    """,
+                   {'answer_message': answer_message})
+    answer_details = cursor.fetchall()
+    return answer_details
+
+
+@connection.connection_handler
 def get_question_by_id(cursor, question_id):
     cursor.execute("""
                     SELECT * FROM question
@@ -109,6 +120,17 @@ def get_answer_by_question_id(cursor, question_id):
                    {'question_id' : question_id})
     answer_details = cursor.fetchall()
     return answer_details
+
+
+@connection.connection_handler
+def get_question_id_by_answer_id(cursor, answer_id):
+    cursor.execute("""
+                    SELECT question_id FROM answer
+                    WHERE question_id = %(answer_id)s;
+                    """,
+                   {'answer_id': answer_id})
+    question_id = cursor.fetchall()
+    return question_id
 
 
 @connection.connection_handler
@@ -148,6 +170,17 @@ def add_answer(cursor, site_input, question_id):
 
 
 @connection.connection_handler
+def add_answer(cursor, site_input, answer_id):
+    cursor.execute("""
+                    UPDATE answer SET message=%(new_message)s WHERE id=%(answer_id)s;
+                    """,
+                   {
+                       'new_message': site_input,
+                       'answer_id': answer_id
+                   })
+
+
+@connection.connection_handler
 def add_comment(cursor, server_input):
     id_, comment, instance = 0, 1, 2
     if server_input[instance] == 'question':
@@ -180,9 +213,18 @@ def add_comment(cursor, server_input):
                             VALUES(%(question_id)s, %(answer_id)s, %(message)s,
                                    %(submission_time)s, %(edited_count)s);
                                    """,
-                       {'question_id':question_id,
-                        'answer_id':answer_id,
-                        'message':message,
-                        'submission_time':submission_time,
-                        'edited_count':edited_count})
+                       {'question_id': question_id,
+                        'answer_id': answer_id,
+                        'message': message,
+                        'submission_time': submission_time,
+                        'edited_count': edited_count})
 
+
+@connection.connection_handler
+def edit_answer(cursor, site_input):
+    cursor.execute("""
+                    UPDATE answer SET message = %(message)s 
+                    WHERE id = %(answer_id)s;
+                    """,
+                   {'answer_id': site_input[1],
+                    'message': site_input[0]})

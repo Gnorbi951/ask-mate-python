@@ -5,10 +5,8 @@
     </h1>
     <form method="post">
         <label for="new-answer">Your answer:</label><br>
-        {% for data in answer_data %}
-        <textarea rows="15" cols="50" name="new-answer" id="new-answer">{{ data.message if data }}</textarea><br>
-        {% endfor%}
+        <textarea rows="15" cols="50" name="new-answer" id="new-answer">{{ answer_data.message if answer_data }}</textarea><br>
         <input type="submit" value="Answer question">
     </form>
     <a href="/list">Go back to questions</a>
-{% endblock %}
+{% endblock %}>

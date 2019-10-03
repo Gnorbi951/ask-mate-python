@@ -70,7 +70,18 @@ def add_answer(question_id: int):
     return render_template('add_answer.html',question_id=question_id)
 
 
-@app.route('/add-question', methods=['GET', 'POST'])
+@app.route('/answer/<answer_id>/edit', methods=['GET', 'POST'])#check
+def edit_answer(answer_id: int):
+    answer_data=data_manager.get_answer_by_id(answer_id)
+    if request.method == 'POST':
+        site_input = [request.form['new-answer']]
+        site_input.append(answer_id)
+        print(site_input)
+        data_manager.edit_answer(site_input)
+    return render_template('add_answer.html',answer_data=answer_data)
+
+
+@app.route('/add-question', methods=['GET','POST'])
 def add_question():
     if request.method == 'GET':
         return render_template('add_a_question.html')
