@@ -13,7 +13,6 @@ def list_questions():
 @app.route('/search')
 def search():
     search_result = data_manager.search(*request.args.values())
-    print(search_result)
     return render_template('search.html', search_result=search_result)
 
 
