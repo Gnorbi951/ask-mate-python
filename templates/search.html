@@ -1,8 +1,17 @@
 {% extends 'layout.html' %}
 {% block content %}
     <ul>
-        {% for element in search_result %}
-        <li>{{ element.title }}</li>
+        <h2>Title(s):</h2>
+        {% for title in search_result[0] %}
+            <li><p>{{ search_result[0][0].title }}</p></li>
+        {% endfor %}
+        <h2>Message(s):</h2>
+        {% for message in search_result[1] %}
+            <li><p>{{ message.message }}</p></li>
+        {% endfor %}
+        <h2>Answer(s):</h2>
+        {% for answer in search_result[2] %}
+            <li><p>{{ answer.message }}</p></li>
         {% endfor %}
     </ul>
 {% endblock %}

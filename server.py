@@ -13,6 +13,7 @@ def list_questions():
 @app.route('/search')
 def search():
     search_result = data_manager.search(*request.args.values())
+    print(search_result)
     return render_template('search.html', search_result=search_result)
 
 
@@ -28,7 +29,6 @@ def show_specific_question(question_id: int):
     question_comment = data_manager.get_comments_for_question(question_id)
     question_answer = data_manager.get_answers_for_questions(question_id)
     #answer_comment = data_manager.get_comments_for_answer(question_id)
-    print(question_answer)
     return render_template('question_details.html', question_comment=question_comment,
                            question_answer=question_answer, question_data=question_data)
 
@@ -46,7 +46,7 @@ def add_new_comment_to_question(question_id: int):
                            question_id=question_id)
 
 
-@app.route('/answer/<answer_id>/new-comment', methods=['GET', 'POST'])
+'''@app.route('/answer/<answer_id>/new-comment', methods=['GET', 'POST'])
 def add_new_comment_to_answer(answer_id: int):
     answer_data = data_manager.get_answer_by_id(answer_id)
     #question_id = data_manager.get_question_id_by_answer_id(answer_id)
@@ -56,16 +56,19 @@ def add_new_comment_to_answer(answer_id: int):
         data_to_manager = [answer_id, comment, 'answer']
         data_manager.add_comment(data_to_manager)
         status = 'Comment added successfully'
-    return render_template('add_comment.html', answer_data=answer_data, status=status)
-'''                         question_id=question_id[0]'''
+    return render_template('add_comment.html', answer_data=answer_data, status=status)'''
 
 
 @app.route('/question/<question_id>/add-answer', methods=['GET', 'POST'])
 def add_answer(question_id: int):
+    status = ''
+    answer_data=data_manager.get_question_by_id(question_id)
     if request.method == 'POST':
         site_input = request.form['new-answer']
         data_manager.add_answer(site_input, question_id)
-    return render_template('add_answer.html',question_id=question_id)
+        status = 'Answer added successfully'
+    return render_template('add_answer.html',question_id=question_id, answer_data=answer_data,
+                           status=status)
 
 
 @app.route('/answer/<answer_id>/edit', methods=['GET', 'POST'])

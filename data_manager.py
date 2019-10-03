@@ -16,12 +16,23 @@ def search(cursor, search_phrase):
     search_phrase = '%' + search_phrase + '%'
     cursor.execute("""
                         SELECT title FROM question
-                        WHERE title LIKE %(search_phrase)s 
-                        OR message LIKE %(search_phrase)s;
+                        WHERE title LIKE %(search_phrase)s; 
                     """,
                    {'search_phrase': search_phrase})
-    search_phrase = cursor.fetchall()
-    return search_phrase
+    search_phrase_title = cursor.fetchall()
+    cursor.execute("""
+                        SELECT message FROM question
+                        WHERE message LIKE %(search_phrase)s; 
+                    """,
+                   {'search_phrase': search_phrase})
+    search_phrase_message = cursor.fetchall()
+    cursor.execute("""
+                            SELECT message FROM answer
+                            WHERE message LIKE %(search_phrase)s; 
+                        """,
+                   {'search_phrase': search_phrase})
+    search_phrase_answer = cursor.fetchall()
+    return search_phrase_title, search_phrase_message, search_phrase_answer
 
 
 @connection.connection_handler
