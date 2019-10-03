@@ -3,11 +3,53 @@
 }
 
 body {
-    background-image: url("https://static.vecteezy.com/system/resources/previews/000/119/599/original/dirty-grunge-vector-background.jpg");
+    background-image: url("https://get.pxhere.com/photo/nature-horizon-light-cloud-sky-sunlight-cloudy-air-atmosphere-photo-daytime-clear-cumulus-covered-blue-blue-sky-clouds-background-climate-blue-sky-clouds-meteorological-phenomenon-atmosphere-of-earth-639846.jpg");
+    font-family: 'Ubuntu', 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;
     color: black;
 }
 
 
 h1 {
-    color: #ff4114;
+    color: #323bff;
+}
+
+.main_table table th td {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    min-width: 400px;
+    border-radius: 5px 5px 0 0;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+
+}
+.main_table thead tr {
+    background-color: #848efa;
+    color: black;
+    text-align: left;
+    font-size: 26px;
+    font-weight: bold;
+
+}
+
+.main_table th,
+.main_table td {
+    padding: 12px 15px;
+    font-size: 18px;
+}
+
+.main_table tbody tr:nth-of-type(even) {
+    background-color: #7bb8fa;
+
+}
+
+.main_table tbody tr:last-of-type {
+    border-bottom: 2px solid black;
+}
+
+#main_page_header{
+    text-align: center;
+    font-family: 'Ubuntu', 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;
+    padding: 3%;
+    font-size: 5ch;
 }

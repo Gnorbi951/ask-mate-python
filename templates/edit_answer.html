@@ -5,7 +5,7 @@
     </h1>
     <form method="post">
         <label for="new-answer">Your answer:</label><br>
-        <textarea rows="15" cols="50" name="new-answer" id="new-answer"></textarea><br>
+        <textarea rows="15" cols="50" name="new-answer" id="new-answer">{{ answer_data.message if answer_data }}</textarea><br>
         <input type="submit" value="Answer question">
     </form>
     <a href="/list">Go back to questions</a>

@@ -19,18 +19,16 @@
     <div class="answer">
         <h2>Answers to questions</h2>
         {% for answer in question_answer %}
-            <ul>
-                <li>{{ answer.message }} </li>
-            </ul>
+            <dl>
+                <dt>{{ answer.message }}</dt>
+            <a href="{{ url_for('edit_answer',answer_id=answer.id) }}">Edit answer</a>
+                <a href="{{ url_for('add_new_comment_to_answer', answer_id = answer.id ) }}">Add new comment</a>
         {% endfor %}
-        {% for answer_id in answer_data %}
-            <a href="{{ url_for('edit_answer', answer_id=answer_id.id) }}">Edit Answer</a>
+        {% for comment in answer_comment %}
+                <dd>{{ comment.message }}</dd>
+            </dl>
         {% endfor %}
-    
-    {% for question_id in question_data %}
-    <a href="{{ url_for('add_answer', question_id = question_id.id ) }}">Add new answer</a>
-    {% endfor %}
-
+    <a href="{{ url_for('add_answer', question_id = question_data[0].id ) }}">Add new answer</a>
     </div>
     <a href="/list">Back</a>
 {% endblock %}
