@@ -3,7 +3,7 @@
 }
 
 body {
-    background-color: ghostwhite;
+    background-color: #73fff0;
     font-family: 'Ubuntu', 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;
     color: black;
 }
@@ -48,7 +48,7 @@ tbody tr:nth-of-type(even) {
 }
 
 tbody tr:nth-of-type(odd) {
-    background-color: whitesmoke;
+    background-color: #fae8e9;
 }
 
 #main_page_header{
