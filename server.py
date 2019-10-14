@@ -78,45 +78,10 @@ def add_question():
     return redirect('/')
 
 
-'''@app.route('/answer/<answer_id>/new-comment', methods=['GET', 'POST'])
-def add_new_comment_to_answer(answer_id: int):
-    answer_data = data_manager.get_answer_by_id(answer_id)
-    #question_id = data_manager.get_question_id_by_answer_id(answer_id)
-    status = ''
-    if request.method == 'POST':
-        comment = request.form['comment']
-        data_to_manager = [answer_id, comment, 'answer']
-        data_manager.add_comment(data_to_manager)
-        status = 'Comment added successfully'
-    return render_template('add_comment.html', answer_data=answer_data, status=status)'''
-
-
-"""
-@app.route('/question/<question_id>')
-def display_question(question_id: int):
-    question_data = data_manager.get_questions(question_id)
-    answer_data = data_manager.get_answers(question_id)
-    '''if isinstance(answer_data, list):
-        answer_data = {'message': 'No answer so far...'}'''
-    if isinstance(question_data, list):
-        return redirect('/error')
-    return render_template('display_a_question.html',
-                           question_data=question_data,
-                           answer_data=answer_data)
-
-
-@app.route('/question/<answer_id>/new-answer', methods=['GET', 'POST'])
-def answer_question(answer_id: int):
-    if request.method == 'POST':
-        data_manager.pass_answers_to_handler([answer_id, request.form['new-answer']])
-        return redirect('/') #It should redirect to display question and not homepage.
-    return render_template('add_answer.html')
-
-
 @app.route('/error')
 def handle_exceptions():
     return render_template('exception_handing.html')
-"""
+
 
 if __name__ == '__main__':
     app.run(
