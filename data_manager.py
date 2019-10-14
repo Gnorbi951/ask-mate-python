@@ -217,3 +217,20 @@ def edit_answer(cursor, site_input):
                     """,
                    {'answer_id': site_input[1],
                     'message': site_input[0]})
+
+
+@connection.connection_handler
+def add_user(cursor, inputs):
+    """
+    :param cursor: conncetion handler
+    :param inputs: Accepts a list, [0] is user_name, [1] is HASHED password
+    :return: writes in the table
+    """
+    username, password = 0, 1
+    cursor.execute("""
+                    UPDATE users
+                        SET user_name = %(user)s,
+                        password = %(pw)s;
+                        """,
+                   {'user': inputs[username],
+                    'pw': inputs[password]})
