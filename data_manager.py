@@ -54,16 +54,16 @@ def get_comments_for_question(cursor, question_id):
     return question_comments
 
 
-'''@connection.connection_handler
+@connection.connection_handler
 def get_comments_for_answer(cursor, answer_id):
     cursor.execute("""
-                    SELECT answer.message, comment.message AS comment, answer.id FROM answer
-                    INNER JOIN comment ON answer.id=comment.answer_id
+                    SELECT a.message, c.message AS comment, a.id FROM answer AS a 
+                    INNER JOIN comment c ON a.id=c.answer_id
                     WHERE %(answer_id)s = answer_id;
                     """,
                    {'answer_id': answer_id})
     answer_comment = cursor.fetchall()
-    return answer_comment'''
+    return answer_comment
 
 
 @connection.connection_handler

@@ -2,12 +2,19 @@
 {% block content %}
     <h1>Add a comment</h1>
     {% for data in question_data %}
+        <h2> Questions: </h2>
         <a><h2>{{ data.title }}</h2></a><br>
         <p><a>{{ data.message }}</a><br></p>
     {% endfor %}
 
     {% for data in answer_data %}
+        <h2>Answer:</h2>
         <a><p>{{ data.message }}</p></a><br>
+    {% endfor %}
+
+    {% for data in answer_comment %}
+        <h2>Comments:</h2>
+        <a><p>{{ data.comment }}</p></a><br><br>
     {% endfor %}
 
     <form method="post">

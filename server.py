@@ -27,7 +27,6 @@ def show_specific_question(question_id: int):
     question_data = data_manager.get_question_by_id(question_id)
     question_comment = data_manager.get_comments_for_question(question_id)
     question_answer = data_manager.get_answers_for_questions(question_id)
-    #answer_comment = data_manager.get_comments_for_answer(question_id)
     return render_template('question_details.html', question_comment=question_comment,
                            question_answer=question_answer, question_data=question_data)
 
@@ -43,6 +42,20 @@ def add_new_comment_to_question(question_id: int):
         status = 'Comment added successfully'
     return render_template('add_comment.html', question_data=question_data, status=status,
                            question_id=question_id)
+
+
+@app.route('/answer/<answer_id>/new-comment', methods=['GET', 'POST'])
+def add_new_comment_to_answer(answer_id: int):
+    answer_data = data_manager.get_answer_by_id(answer_id)
+    answer_comment = data_manager.get_comments_for_answer(answer_id)
+    status = ''
+    if request.method == 'POST':
+        comment = request.form['comment']
+        data_to_manager = [answer_id, comment, 'answer']
+        data_manager.add_comment(data_to_manager)
+        status = 'Comment added successfully'
+    return render_template('add_comment.html', answer_data=answer_data, status=status,
+                           answer_comment=answer_comment)
 
 
 @app.route('/question/<question_id>/add-answer', methods=['GET', 'POST'])
@@ -76,11 +89,6 @@ def add_question():
     site_input = [request.form['title'], request.form['message']]
     data_manager.add_question(site_input)
     return redirect('/')
-
-
-@app.route('/error')
-def handle_exceptions():
-    return render_template('exception_handing.html')
 
 
 if __name__ == '__main__':
