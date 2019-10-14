@@ -45,19 +45,6 @@ def add_new_comment_to_question(question_id: int):
                            question_id=question_id)
 
 
-'''@app.route('/answer/<answer_id>/new-comment', methods=['GET', 'POST'])
-def add_new_comment_to_answer(answer_id: int):
-    answer_data = data_manager.get_answer_by_id(answer_id)
-    #question_id = data_manager.get_question_id_by_answer_id(answer_id)
-    status = ''
-    if request.method == 'POST':
-        comment = request.form['comment']
-        data_to_manager = [answer_id, comment, 'answer']
-        data_manager.add_comment(data_to_manager)
-        status = 'Comment added successfully'
-    return render_template('add_comment.html', answer_data=answer_data, status=status)'''
-
-
 @app.route('/question/<question_id>/add-answer', methods=['GET', 'POST'])
 def add_answer(question_id: int):
     status = ''
@@ -91,7 +78,17 @@ def add_question():
     return redirect('/')
 
 
-
+'''@app.route('/answer/<answer_id>/new-comment', methods=['GET', 'POST'])
+def add_new_comment_to_answer(answer_id: int):
+    answer_data = data_manager.get_answer_by_id(answer_id)
+    #question_id = data_manager.get_question_id_by_answer_id(answer_id)
+    status = ''
+    if request.method == 'POST':
+        comment = request.form['comment']
+        data_to_manager = [answer_id, comment, 'answer']
+        data_manager.add_comment(data_to_manager)
+        status = 'Comment added successfully'
+    return render_template('add_comment.html', answer_data=answer_data, status=status)'''
 
 
 """
@@ -119,9 +116,6 @@ def answer_question(answer_id: int):
 @app.route('/error')
 def handle_exceptions():
     return render_template('exception_handing.html')
-
-
-
 """
 
 if __name__ == '__main__':
