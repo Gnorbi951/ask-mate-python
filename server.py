@@ -46,6 +46,7 @@ def add_new_comment_to_question(question_id: int):
 
 @app.route('/answer/<answer_id>/new-comment', methods=['GET', 'POST'])
 def add_new_comment_to_answer(answer_id: int):
+    #question_id = data_manager.get_question_id_by_answer_id(answer_id)
     answer_data = data_manager.get_answer_by_id(answer_id)
     answer_comment = data_manager.get_comments_for_answer(answer_id)
     status = ''

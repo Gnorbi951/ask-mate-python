@@ -124,8 +124,9 @@ def get_answer_by_question_id(cursor, question_id):
 @connection.connection_handler
 def get_question_id_by_answer_id(cursor, answer_id):
     cursor.execute("""
-                    SELECT question_id FROM answer
-                    WHERE question_id = %(answer_id)s;
+                    SELECT q.id FROM question AS q
+                    JOIN answer a on q.id = a.question_id
+                    WHERE a.id = %{answer_id}s;
                     """,
                    {'answer_id': answer_id})
     question_id = cursor.fetchall()
