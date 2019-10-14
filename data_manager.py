@@ -105,7 +105,7 @@ def get_answer_by_id(cursor, answer_id):
                     SELECT * FROM answer
                     WHERE id = %(answer_id)s;
                     """,
-                   {'answer_id' : answer_id})
+                   {'answer_id': answer_id})
     answer_details = cursor.fetchall()
     return answer_details
 
