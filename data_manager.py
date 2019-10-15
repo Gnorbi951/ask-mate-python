@@ -234,3 +234,11 @@ def add_user(cursor, inputs):
                         """,
                    {'user': inputs[username],
                     'pw': inputs[password]})
+
+@connection.connection_handler
+def list_users(cursor):
+    cursor.execute("""
+                    SELECT id, user_name, registration_date, status
+                    FROM users""")
+    users = cursor.fetchall()
+    return users
