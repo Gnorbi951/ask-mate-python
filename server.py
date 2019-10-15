@@ -112,8 +112,8 @@ def list_users():
 
 @app.route('/user/<user_id>')
 def user_page(user_id: int):
-    users = data_manager
-    return users
+    user_data = data_manager.get_user_activities(user_id)
+    return render_template('user_page.html', user_data=user_data)
 
 
 if __name__ == '__main__':

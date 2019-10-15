@@ -244,7 +244,15 @@ def list_users(cursor):
 
 
 @connection.connection_handler
-def get_user_activities(cursor, user_id)
+def get_user_activities(cursor, user_id):
     cursor.execute("""
-                    SELECT * FROM users AS u 
-                    JOIN answer a on u.id = a.user_id""")
+                    SELECT a.message AS ans_message, c.message AS com_message,
+                    q.title, u.user_name  FROM users AS u 
+                    JOIN answer a on u.id = a.user_id
+                    JOIN question q on u.id = q.user_id
+                    JOIN comment c on u.id = c.user_id
+                    WHERE u.id = %(user_id)s;
+                    """,
+                   {'user_id':user_id})
+    user_activities = cursor.fetchall()
+    return user_activities
