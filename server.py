@@ -9,9 +9,13 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 @app.route('/', methods=['GET', 'POST'])
 def list_questions():
     if request.method == 'POST':
-        session['username'] = request.form['username']
+        data=data_manager.get_existing_users()
+        for line in data:
+            if request.form['username'] == line.get('user_name') and request.form['password'] == line.get('password'):
+                session['username'] = request.form['username']
+                session['password'] = request.form['password']
 
-    if 'username' in session:
+    if 'username' in session and 'password' in session:
         login_name=session['username']
         is_logged_in=True
     else:
