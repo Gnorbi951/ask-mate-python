@@ -12,7 +12,7 @@
         {% for data in users %}
         <tr>
             <td>{{ data.id }}</td>
-            <td>{{ data.user_name }}</td>
+            <td><a href="{{ url_for('user_page', user_id=data.id ) }}">{{ data.user_name }}</td>
             <td>{{ data.registration_date }}</td>
             <td>{{ data.status }}</td>
         </tr>

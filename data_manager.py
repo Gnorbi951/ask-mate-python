@@ -242,3 +242,10 @@ def list_users(cursor):
                     FROM users""")
     users = cursor.fetchall()
     return users
+
+
+@connection.connection_handler
+def get_user_activities(cursor, user_id)
+    cursor.execute("""
+                    SELECT * FROM users AS u 
+                    JOIN answer a on u.id = a.user_id""")

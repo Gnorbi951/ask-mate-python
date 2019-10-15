@@ -97,9 +97,10 @@ def list_users():
     users = data_manager.list_users()
     return render_template('list_users.html', users=users)
 
+
 @app.route('/user/<user_id>')
 def user_page(user_id: int):
-    users = x
+    users = data_manager
     return users
 
 
