@@ -116,6 +116,37 @@ def user_page(user_id: int):
     return render_template('user_page.html', user_data=user_data)
 
 
+@app.route('/question/<question_id>/vote_up')
+def vote_up(question_id: int):
+    data_manager.vote_up(question_id)
+    return redirect('/list')
+
+
+@app.route('/question/<question_id>/vote_down')
+def vote_down(question_id: int):
+    data_manager.vote_down(question_id)
+    return redirect('/list')
+
+
+@app.route('/question/<question_id>/delete')
+def delete_question(question_id: int):
+    data_manager.delete_question(question_id)
+    return redirect('/list')
+
+
+@app.route('/answer/<answer_id>/vote_up')
+def vote_up_answer(answer_id: int):
+    data_manager.vote_up_answer(answer_id)
+    return redirect('/list')
+
+
+@app.route('/answer/<answer_id>/vote_down')
+def vote_down_answser(answer_id: int):
+    data_manager.vote_down_answer(answer_id)
+    return redirect('/list')
+
+
+
 if __name__ == '__main__':
     app.run(
         debug=True

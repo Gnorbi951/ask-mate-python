@@ -5,7 +5,9 @@ import common
 @connection.connection_handler
 def get_least_questions(cursor):
     cursor.execute("""
-                        SELECT title,message FROM question ORDER BY submission_time desc LIMIT 5;
+                        SELECT title,message FROM question
+                        ORDER BY submission_time DESC 
+                        LIMIT 5;
                     """)
     table = cursor.fetchall()
     return table
@@ -247,7 +249,7 @@ def list_users(cursor):
 def get_user_activities(cursor, user_id):
     cursor.execute("""
                     SELECT a.message AS ans_message, c.message AS com_message,
-                    q.title, u.user_name  FROM users AS u 
+                    q.title, u.user_name, q.id  FROM users AS u 
                     JOIN answer a on u.id = a.user_id
                     JOIN question q on u.id = q.user_id
                     JOIN comment c on u.id = c.user_id
@@ -256,3 +258,52 @@ def get_user_activities(cursor, user_id):
                    {'user_id':user_id})
     user_activities = cursor.fetchall()
     return user_activities
+
+
+@connection.connection_handler
+def vote_up(cursor, question_id):
+    cursor.execute("""
+                    UPDATE question
+                    SET vote_number = vote_number + 1
+                    WHERE id = %(question_id)s;
+                    """,
+                   {'question_id':question_id})
+
+
+@connection.connection_handler
+def vote_down(cursor, question_id):
+    cursor.execute("""
+                    UPDATE question
+                    SET vote_number = vote_number - 1
+                    WHERE id = %(question_id)s;
+                    """,
+                   {'question_id':question_id})
+
+
+@connection.connection_handler
+def delete_question(cursor, question_id):
+    cursor.execute("""
+                    DELETE FROM question
+                    WHERE id = %(question_id)s;
+                    """,
+                   {'question_id':question_id})
+
+
+@connection.connection_handler
+def vote_up_answer(cursor, answer_id):
+    cursor.execute("""
+                    UPDATE answer
+                    SET vote_number = vote_number + 1
+                    WHERE id = %(answer_id)s;
+                    """,
+                   {'answer_id':answer_id})
+
+
+@connection.connection_handler
+def vote_down_answer(cursor, answer_id):
+    cursor.execute("""
+                    UPDATE answer
+                    SET vote_number = vote_number - 1
+                    WHERE id = %(answer_id)s;
+                    """,
+                   {'answer_id':answer_id})
