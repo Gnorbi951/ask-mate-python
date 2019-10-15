@@ -228,9 +228,8 @@ def add_user(cursor, inputs):
     """
     username, password = 0, 1
     cursor.execute("""
-                    UPDATE users
-                        SET user_name = %(user)s,
-                        password = %(pw)s;
+                    INSERT INTO users (user_name, password)
+                        VALUES (%(user)s, %(pw)s);
                         """,
                    {'user': inputs[username],
                     'pw': inputs[password]})

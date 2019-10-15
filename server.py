@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template, redirect
 import data_manager
+import validation
 
 app = Flask(__name__)
 
@@ -90,6 +91,17 @@ def add_question():
     site_input = [request.form['title'], request.form['message']]
     data_manager.add_question(site_input)
     return redirect('/')
+
+
+@app.route('/user-registration', methods=['GET', 'POST'])
+def register_user():
+    if request.method == 'POST':
+        user_name = request.form.get('user_name')
+        password = request.form.get('pw')
+        hashed_password = validation.hash_password(password)
+        all_input = [user_name, hashed_password]
+        data_manager.add_user(all_input)
+    return render_template('registration.html')
 
 
 @app.route('/users')
