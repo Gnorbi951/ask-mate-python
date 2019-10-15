@@ -3,14 +3,12 @@
     <h1>
         Add your answer:
     </h1>
-    {% for data in answer_data %}
-        <a><h3>{{ data.message }}</h3></a>
-    {% endfor %}
     <form method="post">
         <label for="new-answer">Your answer:</label><br>
-        <textarea rows="15" cols="50" name="new-answer" id="new-answer"></textarea><br>
+        {% for data in answer_data %}
+        <textarea rows="15" cols="50" name="new-answer" id="new-answer">{{ data.message if answer_data }}</textarea><br>
+        {% endfor%}
         <input type="submit" value="Answer question">
     </form>
-    {{ status }}
     <a href="/list">Go back to questions</a>
 {% endblock %}

@@ -3,7 +3,7 @@
 }
 
 body {
-    background-image: url("https://get.pxhere.com/photo/nature-horizon-light-cloud-sky-sunlight-cloudy-air-atmosphere-photo-daytime-clear-cumulus-covered-blue-blue-sky-clouds-background-climate-blue-sky-clouds-meteorological-phenomenon-atmosphere-of-earth-639846.jpg");
+    background-color: #73fff0;
     font-family: 'Ubuntu', 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;
     color: black;
 }
@@ -13,7 +13,11 @@ h1 {
     color: #323bff;
 }
 
-.main_table table th td {
+h2 {
+    color: #323bff;
+}
+
+table th td {
     border-collapse: collapse;
     margin: 25px 0;
     font-size: 0.9em;
@@ -23,7 +27,7 @@ h1 {
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 
 }
-.main_table thead tr {
+thead tr {
     background-color: #848efa;
     color: black;
     text-align: left;
@@ -32,19 +36,19 @@ h1 {
 
 }
 
-.main_table th,
-.main_table td {
+th,
+td {
     padding: 12px 15px;
     font-size: 18px;
 }
 
-.main_table tbody tr:nth-of-type(even) {
+tbody tr:nth-of-type(even) {
     background-color: #7bb8fa;
 
 }
 
-.main_table tbody tr:last-of-type {
-    border-bottom: 2px solid black;
+tbody tr:nth-of-type(odd) {
+    background-color: #fae8e9;
 }
 
 #main_page_header{
@@ -53,3 +57,5 @@ h1 {
     padding: 3%;
     font-size: 5ch;
 }
+
+.comments

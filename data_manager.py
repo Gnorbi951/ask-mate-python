@@ -16,12 +16,23 @@ def search(cursor, search_phrase):
     search_phrase = '%' + search_phrase + '%'
     cursor.execute("""
                         SELECT title FROM question
-                        WHERE title LIKE %(search_phrase)s 
-                        OR message LIKE %(search_phrase)s;
-                    """,  # We need also search in answers
+                        WHERE title LIKE %(search_phrase)s; 
+                    """,
                    {'search_phrase': search_phrase})
-    search_phrase = cursor.fetchall()
-    return search_phrase
+    search_phrase_title = cursor.fetchall()
+    cursor.execute("""
+                        SELECT message FROM question
+                        WHERE message LIKE %(search_phrase)s; 
+                    """,
+                   {'search_phrase': search_phrase})
+    search_phrase_message = cursor.fetchall()
+    cursor.execute("""
+                            SELECT message FROM answer
+                            WHERE message LIKE %(search_phrase)s; 
+                        """,
+                   {'search_phrase': search_phrase})
+    search_phrase_answer = cursor.fetchall()
+    return search_phrase_title, search_phrase_message, search_phrase_answer
 
 
 @connection.connection_handler
@@ -46,7 +57,8 @@ def get_comments_for_question(cursor, question_id):
 @connection.connection_handler
 def get_comments_for_answer(cursor, answer_id):
     cursor.execute("""
-                    SELECT message FROM comment
+                    SELECT a.message, c.message AS comment, a.id FROM answer AS a 
+                    INNER JOIN comment c ON a.id=c.answer_id
                     WHERE %(answer_id)s = answer_id;
                     """,
                    {'answer_id': answer_id})
@@ -93,7 +105,7 @@ def get_answer_by_id(cursor, answer_id):
                     SELECT * FROM answer
                     WHERE id = %(answer_id)s;
                     """,
-                   {'answer_id' : answer_id})
+                   {'answer_id': answer_id})
     answer_details = cursor.fetchall()
     return answer_details
 
@@ -112,8 +124,9 @@ def get_answer_by_question_id(cursor, question_id):
 @connection.connection_handler
 def get_question_id_by_answer_id(cursor, answer_id):
     cursor.execute("""
-                    SELECT question_id FROM answer
-                    WHERE question_id = %(answer_id)s;
+                    SELECT q.id FROM question AS q
+                    JOIN answer a on q.id = a.question_id
+                    WHERE a.id = %{answer_id}s;
                     """,
                    {'answer_id': answer_id})
     question_id = cursor.fetchall()
@@ -154,17 +167,6 @@ def add_answer(cursor, site_input, question_id):
                        'question_id': values[2],
                        'message': values[3],
                        'image': values[4]})
-
-
-@connection.connection_handler
-def add_answer(cursor, site_input, answer_id):
-    cursor.execute("""
-                    UPDATE answer SET message=%(new_message)s WHERE id=%(answer_id)s;
-                    """,
-                   {
-                       'new_message': site_input,
-                       'answer_id': answer_id
-                   })
 
 
 @connection.connection_handler
@@ -215,3 +217,20 @@ def edit_answer(cursor, site_input):
                     """,
                    {'answer_id': site_input[1],
                     'message': site_input[0]})
+
+
+@connection.connection_handler
+def add_user(cursor, inputs):
+    """
+    :param cursor: conncetion handler
+    :param inputs: Accepts a list, [0] is user_name, [1] is HASHED password
+    :return: writes in the table
+    """
+    username, password = 0, 1
+    cursor.execute("""
+                    UPDATE users
+                        SET user_name = %(user)s,
+                        password = %(pw)s;
+                        """,
+                   {'user': inputs[username],
+                    'pw': inputs[password]})

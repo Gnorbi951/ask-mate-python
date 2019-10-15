@@ -16,9 +16,23 @@
             <tr>
                 <td>{{value.title }}</td>
                 <td>{{ value.message }}</td>
+            </tr>
         {% endfor %}
     </table>
     <form>
         <p><a href="{{ url_for('show_all_questions') }}">Show all questions</a></p>
     </form>
+
+        {% if is_logged_in == True%}
+        You are logged in as {{ login_name}}<br>
+            <a href="{{ url_for('logout') }}">Log out</a>
+
+        {% else%}
+        <p>Log in</p>
+        <form method="post">
+        <p><input type=text name=username>
+        <p><input type=submit value=Login>
+        </form>
+        {% endif %}
+
 {% endblock %}
