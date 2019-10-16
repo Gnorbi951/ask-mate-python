@@ -18,15 +18,8 @@ def list_questions():
                 session['username'] = request.form['username']
                 session['password'] = request.form['password']
 
-    if 'username' in session:
-        login_name=session['username']
-        is_logged_in=True
-    else:
-        login_name='None'
-        is_logged_in = False
-
     data = data_manager.get_least_questions()
-    return render_template('index.html', data=data, login_name=login_name,is_logged_in=is_logged_in)
+    return render_template('index.html', data=data)
 
 @app.route('/logout')
 def logout():
@@ -139,6 +132,7 @@ def register_user():
         hashed_password = validation.hash_password(password)
         all_input = [user_name, hashed_password]
         data_manager.add_user(all_input)
+        return redirect('/')
     return render_template('registration.html')
 
 
