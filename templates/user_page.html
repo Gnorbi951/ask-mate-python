@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1>User Page</h1>
+
+    {% for data in user_data %}
+        <h2>User:</h2>
+        <em>{{ data.user_name }}</em><br><br>
+        <h3>Questions:</h3>
+            <ul>
+                <li><a href="{{ url_for('show_specific_question', question_id = data.id) }}">{{ data.title }}</a></li>
+            </ul>
+        <h3>Answers:</h3>
+            <ul>
+                <li>{{ data.ans_message }}</li>
+            </ul>
+        <h3>Comments:</h3>
+            <ul>
+                <li>{{ data.com_message }}</li>
+            </ul>
+    {% endfor%}
+    <a href="{{ url_for('list_users') }}">Back</a>
+
+{% endblock %}

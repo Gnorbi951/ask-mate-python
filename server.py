@@ -115,6 +115,60 @@ def add_question():
     return redirect('/')
 
 
+@app.route('/user-registration', methods=['GET', 'POST'])
+def register_user():
+    if request.method == 'POST':
+        user_name = request.form.get('user_name')
+        password = request.form.get('pw')
+        hashed_password = validation.hash_password(password)
+        all_input = [user_name, hashed_password]
+        data_manager.add_user(all_input)
+    return render_template('registration.html')
+
+
+@app.route('/users')
+def list_users():
+    users = data_manager.list_users()
+    return render_template('list_users.html', users=users)
+
+
+@app.route('/user/<user_id>')
+def user_page(user_id: int):
+    user_data = data_manager.get_user_activities(user_id)
+    return render_template('user_page.html', user_data=user_data)
+
+
+@app.route('/question/<question_id>/vote_up')
+def vote_up(question_id: int):
+    data_manager.vote_up(question_id)
+    return redirect('/list')
+
+
+@app.route('/question/<question_id>/vote_down')
+def vote_down(question_id: int):
+    data_manager.vote_down(question_id)
+    return redirect('/list')
+
+
+@app.route('/question/<question_id>/delete')
+def delete_question(question_id: int):
+    data_manager.delete_question(question_id)
+    return redirect('/list')
+
+
+@app.route('/answer/<answer_id>/vote_up')
+def vote_up_answer(answer_id: int):
+    data_manager.vote_up_answer(answer_id)
+    return redirect('/list')
+
+
+@app.route('/answer/<answer_id>/vote_down')
+def vote_down_answser(answer_id: int):
+    data_manager.vote_down_answer(answer_id)
+    return redirect('/list')
+
+
+
 if __name__ == '__main__':
     app.run(
         debug=True

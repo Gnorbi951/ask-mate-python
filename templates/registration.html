@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="registration">
+    <h1>Registration</h1>
+    <form method="post">
+        <label for="name">User Name:</label><br>
+        <input type="text" required id="name" name="user_name" placeholder="Your User Name"><br>
+        <label for="password">Password:</label><br>
+        <input type="password" required id="password" name="pw" placeholder="Your Password"><br>
+        <input type="submit">
+    </form>
+    </div>
+    <a href="/">Back to main page</a>
+{% endblock %}

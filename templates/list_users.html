@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block content %}
+    <table>
+        <thead>
+            <tr>
+                <td>Id</td>
+                <td>User Name</td>
+                <td>Registration date</td>
+                <td>Status</td>
+            </tr>
+        </thead>
+        {% for data in users %}
+        <tr>
+            <td>{{ data.id }}</td>
+            <td><a href="{{ url_for('user_page', user_id=data.id ) }}">{{ data.user_name }}</td>
+            <td>{{ data.registration_date }}</td>
+            <td>{{ data.status }}</td>
+        </tr>
+    </table>
+    {% endfor %}
+    <p><a href="/">Back to homepage</a></p>
+{% endblock %}

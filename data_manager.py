@@ -1,13 +1,13 @@
 import connection
 import common
-import bcrypt
-
 
 
 @connection.connection_handler
 def get_least_questions(cursor):
     cursor.execute("""
-                        SELECT title,message FROM question ORDER BY submission_time desc LIMIT 5;
+                        SELECT title,message FROM question
+                        ORDER BY submission_time DESC 
+                        LIMIT 5;
                     """)
     table = cursor.fetchall()
     return table
@@ -40,7 +40,8 @@ def search(cursor, search_phrase):
 @connection.connection_handler
 def get_all_questions(cursor):
     cursor.execute("""
-                    SELECT * FROM question;""")
+                    SELECT * FROM question
+                    ORDER BY submission_time DESC;""")
     question_list = cursor.fetchall()
     return question_list
 
@@ -49,7 +50,8 @@ def get_all_questions(cursor):
 def get_comments_for_question(cursor, question_id):
     cursor.execute("""
                     SELECT message FROM comment
-                    WHERE %(question_id)s = question_id;
+                    WHERE %(question_id)s = question_id
+                    ORDER BY submission_time;
                     """,
                    {'question_id': question_id})
     question_comments = cursor.fetchall()
@@ -61,7 +63,8 @@ def get_comments_for_answer(cursor, answer_id):
     cursor.execute("""
                     SELECT a.message, c.message AS comment, a.id FROM answer AS a 
                     INNER JOIN comment c ON a.id=c.answer_id
-                    WHERE %(answer_id)s = answer_id;
+                    WHERE %(answer_id)s = answer_id
+                    ORDER BY c.submission_time;
                     """,
                    {'answer_id': answer_id})
     answer_comment = cursor.fetchall()
@@ -72,7 +75,8 @@ def get_comments_for_answer(cursor, answer_id):
 def get_answers_for_questions(cursor, question_id):
     cursor.execute("""
                     SELECT * FROM answer
-                    WHERE question_id = %(question_id)s;
+                    WHERE question_id = %(question_id)s
+                    ORDER BY submission_time;
                     """,
                    {'question_id': question_id})
     question_answers = cursor.fetchall()
@@ -230,9 +234,8 @@ def add_user(cursor, inputs):
     """
     username, password = 0, 1
     cursor.execute("""
-                    UPDATE users
-                        SET user_name = %(user)s,
-                        password = %(pw)s;
+                    INSERT INTO users (user_name, password)
+                        VALUES (%(user)s, %(pw)s);
                         """,
                    {'user': inputs[username],
                     'pw': inputs[password]})
@@ -247,3 +250,75 @@ def get_existing_users(cursor):
     return existing_users
 
 
+
+@connection.connection_handler
+def list_users(cursor):
+    cursor.execute("""
+                    SELECT id, user_name, registration_date, status
+                    FROM users""")
+    users = cursor.fetchall()
+    return users
+
+
+@connection.connection_handler
+def get_user_activities(cursor, user_id):
+    cursor.execute("""
+                    SELECT a.message AS ans_message, c.message AS com_message,
+                    q.title, u.user_name, q.id  FROM users AS u 
+                    JOIN answer a on u.id = a.user_id
+                    JOIN question q on u.id = q.user_id
+                    JOIN comment c on u.id = c.user_id
+                    WHERE u.id = %(user_id)s;
+                    """,
+                   {'user_id':user_id})
+    user_activities = cursor.fetchall()
+    return user_activities
+
+
+@connection.connection_handler
+def vote_up(cursor, question_id):
+    cursor.execute("""
+                    UPDATE question
+                    SET vote_number = vote_number + 1
+                    WHERE id = %(question_id)s;
+                    """,
+                   {'question_id':question_id})
+
+
+@connection.connection_handler
+def vote_down(cursor, question_id):
+    cursor.execute("""
+                    UPDATE question
+                    SET vote_number = vote_number - 1
+                    WHERE id = %(question_id)s;
+                    """,
+                   {'question_id':question_id})
+
+
+@connection.connection_handler
+def delete_question(cursor, question_id):
+    cursor.execute("""
+                    DELETE FROM question
+                    WHERE id = %(question_id)s;
+                    """,
+                   {'question_id':question_id})
+
+
+@connection.connection_handler
+def vote_up_answer(cursor, answer_id):
+    cursor.execute("""
+                    UPDATE answer
+                    SET vote_number = vote_number + 1
+                    WHERE id = %(answer_id)s;
+                    """,
+                   {'answer_id':answer_id})
+
+
+@connection.connection_handler
+def vote_down_answer(cursor, answer_id):
+    cursor.execute("""
+                    UPDATE answer
+                    SET vote_number = vote_number - 1
+                    WHERE id = %(answer_id)s;
+                    """,
+                   {'answer_id':answer_id})
