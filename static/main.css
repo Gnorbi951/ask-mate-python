@@ -3,14 +3,14 @@
 }
 
 body {
-    background-color: #73fff0;
+    background-color: #4a49ff;
     font-family: 'Ubuntu', 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;
     color: black;
 }
 
 
 h1 {
-    color: #323bff;
+    color: #f7fff6;
 }
 
 h2 {
@@ -58,4 +58,10 @@ tbody tr:nth-of-type(odd) {
     font-size: 5ch;
 }
 
-.comments
+a:visited {
+    color: black;
+
+}
+a:hover {
+    color: #FF00FF
+}
