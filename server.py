@@ -6,7 +6,6 @@ app = Flask(__name__)
 
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
-
 @app.route('/', methods=['GET', 'POST'])
 def list_questions():
     if request.method == 'POST':
@@ -18,7 +17,7 @@ def list_questions():
                 session['username'] = request.form['username']
                 session['password'] = request.form['password']
 
-    if 'username' in session and 'password' in session:
+    if 'username' in session:
         login_name=session['username']
         is_logged_in=True
     else:

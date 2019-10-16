@@ -1,5 +1,6 @@
 {% extends 'layout.html' %}
 {% block content %}
+
     <div id="main_page_header">
     <h1>
         Ask Mate
@@ -24,18 +25,5 @@
         <p><a href="{{ url_for('list_users') }}">List users</a></p>
     </form>
 
-        {% if is_logged_in == True%}
-        You are logged in as {{ login_name}}<br>
-            <a href="{{ url_for('logout') }}">Log out</a>
 
-        {% else%}
-        <p>Log in</p>
-        <form method="post">
-        <p>Username<input type=text name=username>
-        <p>Password<input type=text name=password>
-        <p><input type=submit value=Login>
-        </form>
-        {% endif %}
-
-    <a href="{{ url_for('register_user') }}">Register</a>
 {% endblock %}
