@@ -40,7 +40,8 @@ def search(cursor, search_phrase):
 @connection.connection_handler
 def get_all_questions(cursor):
     cursor.execute("""
-                    SELECT * FROM question;""")
+                    SELECT * FROM question
+                    ORDER BY submission_time DESC;""")
     question_list = cursor.fetchall()
     return question_list
 
@@ -49,7 +50,8 @@ def get_all_questions(cursor):
 def get_comments_for_question(cursor, question_id):
     cursor.execute("""
                     SELECT message FROM comment
-                    WHERE %(question_id)s = question_id;
+                    WHERE %(question_id)s = question_id
+                    ORDER BY submission_time;
                     """,
                    {'question_id': question_id})
     question_comments = cursor.fetchall()
@@ -61,7 +63,8 @@ def get_comments_for_answer(cursor, answer_id):
     cursor.execute("""
                     SELECT a.message, c.message AS comment, a.id FROM answer AS a 
                     INNER JOIN comment c ON a.id=c.answer_id
-                    WHERE %(answer_id)s = answer_id;
+                    WHERE %(answer_id)s = answer_id
+                    ORDER BY c.submission_time;
                     """,
                    {'answer_id': answer_id})
     answer_comment = cursor.fetchall()
@@ -72,7 +75,8 @@ def get_comments_for_answer(cursor, answer_id):
 def get_answers_for_questions(cursor, question_id):
     cursor.execute("""
                     SELECT * FROM answer
-                    WHERE question_id = %(question_id)s;
+                    WHERE question_id = %(question_id)s
+                    ORDER BY submission_time;
                     """,
                    {'question_id': question_id})
     question_answers = cursor.fetchall()
