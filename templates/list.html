@@ -4,7 +4,7 @@
         Ask Mate
     </h1>
     <form method="get" action="search">
-        <label for="search" ></label>
+        <label for="q" ></label>
         <input type="text" name="q" id="q">
         <button type="submit">Search</button>
     </form>
@@ -13,17 +13,24 @@
         <thead>
             <tr>
                 <th>ID:</th><th>Title:</th>
-                <th>Message:</th><th>View Number:</th>
+                <th>Message:</th>
                 <th>Vote number:</th>
+                <th>Vote:</th>
             </tr>
         </thead>
         {% for data in question_list %}
             <tr>
                 <td>{{ data.id }}</td>
                 <td><a href="{{ url_for('show_specific_question', question_id = data.id) }}">{{ data.title }}</a></td>
-                <td>{{ data.message }}</td>
-                <td>{{ data.view_number }}</td>
+                <td>{{ data.message }}<br>
+                    <a href="{{ url_for('delete_question', question_id=data.id) }}">Delete question</a></td>
                 <td>{{ data.vote_number }}</td>
+                <td>
+                <a href="{{ url_for('vote_up', question_id=data.id) }}">
+                    <input type="button" value="Vote Up" id="vote_up" name="vote_up"></a>
+                <a href="{{ url_for('vote_down', question_id=data.id) }}">
+                    <input type="button" value="Vote Down" id="vote_down" name="vote_down"></a>
+                </td>
             </tr>
         {% endfor %}
     </table>

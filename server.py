@@ -1,15 +1,37 @@
-from flask import Flask, request, render_template, redirect
+from flask import Flask, request, render_template, redirect, session,url_for
 import data_manager
 import validation
 
 app = Flask(__name__)
 
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+
 
 @app.route('/', methods=['GET', 'POST'])
 def list_questions():
-    data = data_manager.get_least_questions()
-    return render_template('index.html', data=data)
+    if request.method == 'POST':
+        data=data_manager.get_existing_users()
+        for line in data:
+            print(request.form['password'], line.get('password'))
+            if request.form['username'] == line.get('user_name') \
+                    and validation.verify_password(request.form['password'], line.get('password')):
+                session['username'] = request.form['username']
+                session['password'] = request.form['password']
 
+    if 'username' in session and 'password' in session:
+        login_name=session['username']
+        is_logged_in=True
+    else:
+        login_name='None'
+        is_logged_in = False
+
+    data = data_manager.get_least_questions()
+    return render_template('index.html', data=data, login_name=login_name,is_logged_in=is_logged_in)
+
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('list_questions'))
 
 @app.route('/search')
 def search():
@@ -114,6 +136,37 @@ def list_users():
 def user_page(user_id: int):
     user_data = data_manager.get_user_activities(user_id)
     return render_template('user_page.html', user_data=user_data)
+
+
+@app.route('/question/<question_id>/vote_up')
+def vote_up(question_id: int):
+    data_manager.vote_up(question_id)
+    return redirect('/list')
+
+
+@app.route('/question/<question_id>/vote_down')
+def vote_down(question_id: int):
+    data_manager.vote_down(question_id)
+    return redirect('/list')
+
+
+@app.route('/question/<question_id>/delete')
+def delete_question(question_id: int):
+    data_manager.delete_question(question_id)
+    return redirect('/list')
+
+
+@app.route('/answer/<answer_id>/vote_up')
+def vote_up_answer(answer_id: int):
+    data_manager.vote_up_answer(answer_id)
+    return redirect('/list')
+
+
+@app.route('/answer/<answer_id>/vote_down')
+def vote_down_answser(answer_id: int):
+    data_manager.vote_down_answer(answer_id)
+    return redirect('/list')
+
 
 
 if __name__ == '__main__':
