@@ -61,7 +61,8 @@ def get_comments_for_question(cursor, question_id):
 @connection.connection_handler
 def get_comments_for_answer(cursor, answer_id):
     cursor.execute("""
-                    SELECT a.message, c.message AS comment, a.id FROM answer AS a 
+                    SELECT a.message, c.message AS comment_message, a.id, c.id AS comment_id
+                     FROM answer AS a 
                     INNER JOIN comment c ON a.id=c.answer_id
                     WHERE %(answer_id)s = answer_id
                     ORDER BY c.submission_time;
@@ -316,6 +317,37 @@ def delete_question(cursor, question_id):
                     WHERE id = %(question_id)s;
                     """,
                    {'question_id':question_id})
+
+
+@connection.connection_handler
+def delete_answer(cursor, answer_id):
+    cursor.execute("""
+                    UPDATE answer
+                    SET message = %(message)s
+                    WHERE id = %(answer_id)s
+                    """,
+                   {'answer_id':answer_id,
+                    'message':'[deleted]'})
+
+
+@connection.connection_handler
+def delete_comment(cursor, comment_id):
+    cursor.execute("""
+                    DELETE FROM comment
+                    WHERE id = %(comment_id)s
+                    """,
+                   {'comment_id':comment_id})
+
+
+@connection.connection_handler
+def get_answer_id_by_comment_id(cursor, comment_id):
+    cursor.execute("""
+                    SELECT c.answer_id FROM comment c
+                    WHERE c.id = %(comment_id)s;
+                    """,
+                   {'comment_id':comment_id})
+    answer_id = cursor.fetchall()
+    return answer_id
 
 
 @connection.connection_handler
