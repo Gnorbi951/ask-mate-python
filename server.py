@@ -123,6 +123,7 @@ def register_user():
         hashed_password = validation.hash_password(password)
         all_input = [user_name, hashed_password]
         data_manager.add_user(all_input)
+        return redirect('/')
     return render_template('registration.html')
 
 
