@@ -12,7 +12,6 @@ def list_questions():
     if request.method == 'POST':
         data=data_manager.get_existing_users()
         for line in data:
-            print(request.form['password'], line.get('password'))
             if request.form['username'] == line.get('user_name') \
                     and validation.verify_password(request.form['password'], line.get('password')):
                 session['username'] = request.form['username']
@@ -38,7 +37,7 @@ def show_all_questions():
     return render_template('list.html', question_list=question_list)
 
 
-@app.route('/question/<question_id>')
+@app.route('/question/<question_id>',methods=['GET','POST'])
 def show_specific_question(question_id: int):
     question_data = data_manager.get_question_by_id(question_id)
     question_comment = data_manager.get_comments_for_question(question_id)
