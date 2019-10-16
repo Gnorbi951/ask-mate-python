@@ -7,6 +7,7 @@ app = Flask(__name__)
 
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
+
 @app.route('/', methods=['GET', 'POST'])
 def list_questions():
     if request.method == 'POST':
@@ -16,9 +17,10 @@ def list_questions():
                     and validation.verify_password(request.form['password'], line.get('password')):
                 session['username'] = request.form['username']
                 session['password'] = request.form['password']
-
-    data = data_manager.get_least_questions()
-    return render_template('index.html', data=data)
+        return redirect('/list')
+    else:
+        data = data_manager.get_least_questions()
+        return render_template('index.html', data=data)
 
 @app.route('/logout')
 def logout():
