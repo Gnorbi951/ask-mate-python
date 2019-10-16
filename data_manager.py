@@ -132,7 +132,7 @@ def get_question_id_by_answer_id(cursor, answer_id):
     cursor.execute("""
                     SELECT q.id FROM question AS q
                     JOIN answer a on q.id = a.question_id
-                    WHERE a.id = %{answer_id}s;
+                    WHERE a.id = %(answer_id)s;
                     """,
                    {'answer_id': answer_id})
     question_id = cursor.fetchall()
@@ -157,6 +157,20 @@ def add_question(cursor, site_input):
                     'message': values[5],
                     'image': values[6]
                     })
+
+
+@connection.connection_handler
+def edit_question(cursor, site_input):
+    cursor.execute("""
+                    UPDATE question
+                    SET message = %(message)s, title = %(title)s
+                    WHERE id = %(question_id)s;
+                    """,
+                   {
+                        'message' : site_input[1],
+                        'title' : site_input[0],
+                        'question_id' : site_input[2]})
+
 
 
 @connection.connection_handler

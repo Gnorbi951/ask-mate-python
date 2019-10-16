@@ -1,10 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
+{% extends 'layout.html' %}
+{% block content %}
 
-</body>
-</html>
+            <h1>Edit a question</h1>
+            <form method="post">
+                {% for data in question_data %}
+                <p><label for="title">Title of question:</label></p>
+                    <textarea rows="1" cols="60" name="title" id="title" minlength="5" required>{{ data.title if question_data }}</textarea>
+
+                <p><label for="message">Describe the question:</label></p>
+                    <textarea rows="10" cols="50" name="message" id="message">{{ data.message if question_data }}</textarea>
+                {% endfor %}
+                <p><button type="submit">Edit question</button></p>
+            </form>
+            <a href="/list">Back</a>
+{% endblock %}
