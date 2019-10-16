@@ -1,10 +1,9 @@
-import datetime
+from datetime import datetime
 import connection
 
 
 def get_submission_time():
-
-    return datetime.date.today()
+    return datetime.now()
 
 
 @connection.connection_handler
