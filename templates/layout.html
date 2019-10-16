@@ -7,7 +7,20 @@
 </head>
 <body>
     <div class="content-wrapper">
-        {% block content %} {% endblock %}
+         {% if session['username'] %}
+            You are logged in as {{ session['username']}}<br>
+            <a href="{{ url_for('logout') }}">Log out</a>
+
+        {% else%}
+            <p>Log in</p>
+            <form method="post">
+            <p>Username<input type=text name=username placeholder="Username"></p>
+            <p>Password<input type=password name=password placeholder="Password"></p>
+            <input type=submit value=Login>
+            <a href="{{ url_for('register_user') }}">Register</a>
+         </form>
+        {% endif %}
+    {% block content %} {% endblock %}
     </div>
 </body>
 </html>

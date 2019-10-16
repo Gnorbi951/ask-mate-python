@@ -25,7 +25,7 @@
                 <a href="{{ url_for('edit_answer',answer_id=data.id) }}">Edit answer</a>
                 <a href="{{ url_for('add_new_comment_to_answer', answer_id = data.id) }}">Show comments</a>
                 <a href="{{ url_for('vote_up_answer', answer_id=data.id ) }}">Vote Up</a>
-                <a href="{{ url_for('vote_down_answser', answer_id=data.id ) }}">Vote Down</a>
+                <a href="{{ url_for('vote_down_answer', answer_id=data.id ) }}">Vote Down</a>
             {% endfor %}
         </ul>
         <a href="{{ url_for('add_answer', question_id = question_data[0].id ) }}">Add new answer</a>

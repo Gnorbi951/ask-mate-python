@@ -1,15 +1,16 @@
 {% extends 'layout.html' %}
 {% block content %}
 
-            <h1>Ask a question</h1>
-            <form action="/add-question" method="post">
+    <h1>Ask a question</h1>
+        <form action="/add-question" method="post">
+            <p><label for="title-input">Title of question:</label></p>
+                <textarea rows="1" cols="60" name="title" id="title-input" minlength="5" required></textarea>
 
-                <p><label for="title-input">Title of question:</label></p>
-                    <textarea rows="1" cols="60" name="title" id="title-input" minlength="5" required></textarea>
+            <p><label for="message-input">Describe the question:</label></p>
+                <textarea rows="10" cols="50" name="message" id="message-input"></textarea>
 
-                <p><label for="message-input">Describe the question:</label></p>
-                    <textarea rows="10" cols="50" name="message" id="message-input"></textarea>
+            <p><button type="submit">Ask question</button></p>
+        </form>
+        <a href="{{ url_for('show_all_questions') }}">Back</a>
 
-                <p><button type="submit">Ask question</button></p>
-            </form>
 {% endblock %}
