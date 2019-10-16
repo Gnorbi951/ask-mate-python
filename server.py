@@ -39,7 +39,7 @@ def show_all_questions():
     return render_template('list.html', question_list=question_list)
 
 
-@app.route('/question/<question_id>')
+@app.route('/question/<question_id>',methods=['GET','POST'])
 def show_specific_question(question_id: int):
     question_data = data_manager.get_question_by_id(question_id)
     question_comment = data_manager.get_comments_for_question(question_id)
@@ -111,8 +111,18 @@ def add_question():
     if request.method == 'GET':
         return render_template('add_a_question.html')
 
-    site_input = [request.form['title'], request.form['message']]
-    data_manager.add_question(site_input)
+
+    if 'username' in session:
+        username=session['username']
+        user_id = data_manager.get_id_by_name(username)
+        site_input = [request.form['title'], request.form['message'], user_id[0].get('id')]
+        data_manager.add_question(site_input)
+
+
+    else:
+        site_input = [request.form['title'], request.form['message'],None ]
+        data_manager.add_question(site_input)
+
     return redirect('/')
 
 
