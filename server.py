@@ -1,15 +1,38 @@
-from flask import Flask, request, render_template, redirect, url_for
+from flask import Flask, request, render_template, redirect, session, url_for
+
 import data_manager
 import validation
 
 app = Flask(__name__)
 
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+
 
 @app.route('/', methods=['GET', 'POST'])
 def list_questions():
-    data = data_manager.get_least_questions()
-    return render_template('index.html', data=data)
+    if request.method == 'POST':
+        data=data_manager.get_existing_users()
+        for line in data:
+            print(request.form['password'], line.get('password'))
+            if request.form['username'] == line.get('user_name') \
+                    and validation.verify_password(request.form['password'], line.get('password')):
+                session['username'] = request.form['username']
+                session['password'] = request.form['password']
 
+    if 'username' in session and 'password' in session:
+        login_name=session['username']
+        is_logged_in=True
+    else:
+        login_name='None'
+        is_logged_in = False
+
+    data = data_manager.get_least_questions()
+    return render_template('index.html', data=data, login_name=login_name,is_logged_in=is_logged_in)
+
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('list_questions'))
 
 @app.route('/search')
 def search():

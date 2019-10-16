@@ -254,6 +254,17 @@ def add_user(cursor, inputs):
                    {'user': inputs[username],
                     'pw': inputs[password]})
 
+
+@connection.connection_handler
+def get_existing_users(cursor):
+    cursor.execute("""
+                    SELECT user_name, password FROM users ;
+                        """)
+    existing_users = cursor.fetchall()
+    return existing_users
+
+
+
 @connection.connection_handler
 def list_users(cursor):
     cursor.execute("""
