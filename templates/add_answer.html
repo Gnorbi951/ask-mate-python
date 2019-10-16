@@ -12,5 +12,5 @@
         <input type="submit" value="Answer question">
     </form>
     {{ status }}
-    <a href="/list">Go back to questions</a>
+    <a href="{{ url_for('show_specific_question', question_id = question_id) }}">Back</a>
 {% endblock %}
