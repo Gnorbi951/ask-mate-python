@@ -23,6 +23,7 @@
                 <td>{{ data.id }}</td>
                 <td><a href="{{ url_for('show_specific_question', question_id = data.id) }}">{{ data.title }}</a></td>
                 <td>{{ data.message }}<br>
+                    <a href="{{ url_for('edit_question', question_id=data.id ) }}">Edit question</a>
                     <a href="{{ url_for('delete_question', question_id=data.id) }}">Delete question</a></td>
                 <td>{{ data.vote_number }}</td>
                 <td>
