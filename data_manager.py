@@ -1,5 +1,7 @@
 import connection
 import common
+import bcrypt
+
 
 
 @connection.connection_handler
@@ -243,3 +245,5 @@ def get_existing_users(cursor):
                         """)
     existing_users = cursor.fetchall()
     return existing_users
+
+

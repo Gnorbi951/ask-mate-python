@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template, redirect, session,url_for
 import data_manager
+import validation
 
 app = Flask(__name__)
 
@@ -11,7 +12,9 @@ def list_questions():
     if request.method == 'POST':
         data=data_manager.get_existing_users()
         for line in data:
-            if request.form['username'] == line.get('user_name') and request.form['password'] == line.get('password'):
+            print(request.form['password'], line.get('password'))
+            if request.form['username'] == line.get('user_name') \
+                    and validation.verify_password(request.form['password'], line.get('password')):
                 session['username'] = request.form['username']
                 session['password'] = request.form['password']
 
