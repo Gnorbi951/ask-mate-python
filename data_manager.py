@@ -49,7 +49,7 @@ def get_all_questions(cursor):
 @connection.connection_handler
 def get_comments_for_question(cursor, question_id):
     cursor.execute("""
-                    SELECT message FROM comment
+                    SELECT id, message FROM comment
                     WHERE %(question_id)s = question_id
                     ORDER BY submission_time;
                     """,
@@ -349,6 +349,17 @@ def get_answer_id_by_comment_id(cursor, comment_id):
                    {'comment_id':comment_id})
     answer_id = cursor.fetchall()
     return answer_id
+
+
+@connection.connection_handler
+def get_question_id_by_comment_id(cursor, comment_id):
+    cursor.execute("""
+                    SELECT c.question_id FROM comment c
+                    WHERE c.id = %(comment_id)s;
+                    """,
+                   {'comment_id' : comment_id})
+    question_id = cursor.fetchall()
+    return question_id
 
 
 @connection.connection_handler

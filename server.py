@@ -51,14 +51,14 @@ def show_specific_question(question_id: int):
 @app.route('/question/<question_id>/new-comment', methods=['GET', 'POST'])
 def add_new_comment_to_question(question_id: int):
     question_data = data_manager.get_question_by_id(question_id)
-    status = ''
+    question_comment = data_manager.get_comments_for_question(question_id)
     if request.method == 'POST':
         comment = request.form['comment']
         data_to_manager = [question_id, comment, 'question']
         data_manager.add_comment(data_to_manager)
-        status = 'Comment added successfully'
-    return render_template('add_comment.html', question_data=question_data, status=status,
-                           question_id=question_id)
+        return redirect(url_for('add_new_comment_to_question', question_id=question_id))
+    return render_template('add_question_comment.html', question_data=question_data,
+                           question_id=question_id, question_comment=question_comment)
 
 
 @app.route('/answer/<answer_id>/new-comment', methods=['GET', 'POST'])
@@ -68,14 +68,12 @@ def add_new_comment_to_answer(answer_id: int):
     answer_data = data_manager.get_answer_by_id(answer_id)
     question_data = data_manager.get_question_by_id(question_id)
     answer_comment = data_manager.get_comments_for_answer(answer_id)
-    status = ''
     if request.method == 'POST':
         comment = request.form['comment']
         data_to_manager = [answer_id, comment, 'answer']
         data_manager.add_comment(data_to_manager)
-        status = 'Comment added successfully'
         return redirect(url_for('add_new_comment_to_answer', answer_id=answer_id))
-    return render_template('add_comment.html', answer_data=answer_data, status=status,
+    return render_template('add_answer_comment.html', answer_data=answer_data,
                            answer_comment=answer_comment, question_id=question_id,
                            question_data=question_data)
 
@@ -204,12 +202,20 @@ def delete_answer(answer_id: int):
     return redirect(url_for('show_specific_question', question_id=question_id))
 
 
-@app.route('/comments/<comment_id>/delete')
-def delete_comment(comment_id: int):
+@app.route('/comments/<comment_id>/delete-a')
+def delete_answer_comment(comment_id: int):
     answer_id = data_manager.get_answer_id_by_comment_id(comment_id)
     answer_id = answer_id[0].get('answer_id')
     data_manager.delete_comment(comment_id)
     return redirect(url_for('add_new_comment_to_answer', answer_id=answer_id))
+
+
+@app.route('/comments/<comment_id>/delete-q')
+def delete_question_comment(comment_id: int):
+    question_id = data_manager.get_question_id_by_comment_id(comment_id)
+    question_id = question_id[0].get('question_id')
+    data_manager.delete_comment(comment_id)
+    return redirect(url_for('add_new_comment_to_question', question_id=question_id))
 
 if __name__ == '__main__':
     app.run(
