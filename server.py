@@ -53,9 +53,15 @@ def add_new_comment_to_question(question_id: int):
     question_data = data_manager.get_question_by_id(question_id)
     question_comment = data_manager.get_comments_for_question(question_id)
     if request.method == 'POST':
-        comment = request.form['comment']
-        data_to_manager = [question_id, comment, 'question']
-        data_manager.add_comment(data_to_manager)
+        if 'username' in session:
+            username = session['username']
+            user_id = data_manager.get_id_by_name(username)
+            site_input = [question_id, request.form['comment'], 'question', user_id[0].get('id')]
+            print(site_input)
+            data_manager.add_comment(site_input)
+        else:
+            site_input = [question_id, request.form['comment'], 'question', None]
+            data_manager.add_comment(site_input)
         return redirect(url_for('add_new_comment_to_question', question_id=question_id))
     return render_template('add_question_comment.html', question_data=question_data,
                            question_id=question_id, question_comment=question_comment)
@@ -69,10 +75,16 @@ def add_new_comment_to_answer(answer_id: int):
     question_data = data_manager.get_question_by_id(question_id)
     answer_comment = data_manager.get_comments_for_answer(answer_id)
     if request.method == 'POST':
-        comment = request.form['comment']
-        data_to_manager = [answer_id, comment, 'answer']
-        data_manager.add_comment(data_to_manager)
+        if 'username' in session:
+            username = session['username']
+            user_id = data_manager.get_id_by_name(username)
+            site_input = [answer_id, request.form['comment'], 'answer', user_id[0].get('id')]
+            data_manager.add_comment(site_input)
+        else:
+            site_input = [answer_id, request.form['comment'], 'answer', None]
+            data_manager.add_comment(site_input)
         return redirect(url_for('add_new_comment_to_answer', answer_id=answer_id))
+
     return render_template('add_answer_comment.html', answer_data=answer_data,
                            answer_comment=answer_comment, question_id=question_id,
                            question_data=question_data)
@@ -152,8 +164,13 @@ def list_users():
 
 @app.route('/user/<user_id>')
 def user_page(user_id: int):
-    user_data = data_manager.get_user_activities(user_id)
-    return render_template('user_page.html', user_data=user_data)
+    user_name = data_manager.get_user_name_by_id(user_id)
+    question_data = data_manager.get_question_by_user_id(user_id)
+    answer_data = data_manager.get_answer_by_user_id(user_id)
+    print(answer_data)
+    comment_data = data_manager.get_comment_by_user_id(user_id)
+    return render_template('user_page.html', user_name=user_name, question_data=question_data,
+                           answer_data=answer_data, comment_data=comment_data)
 
 
 @app.route('/question/<question_id>/vote_up')
