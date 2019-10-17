@@ -11,7 +11,7 @@
         <h2>Comments:</h2>
         {% for data in question_comment %}
             <a><p class="comment_message">{{ data.message }}</p></a>
-            {% if user_name[0].user_name == session['username'] %}
+            {% if user_name.user_name == session['username'] %}
                 <a href="{{ url_for('delete_question_comment', comment_id=data.id) }}"><button class="submit_btn" type="button" >Delete comment</button></a>
             {% endif %}
         {% endfor %}
