@@ -1,28 +1,23 @@
 {% extends 'layout.html' %}
 {% block content %}
     <h1>Add a comment</h1>
-    {% for data in question_data %}
         <h2> Questions: </h2>
-        <a><h2>{{ data.title }}</h2></a><br>
-        <p><a>{{ data.message }}</a><br></p>
-    {% endfor %}
+        {% for data in question_data %}
+            <a><h2>{{ data.title }}</h2></a><br>
+            <p><a>{{ data.message }}</a><br></p>
+        {% endfor %}
 
-    {% for data in answer_data %}
-        <h2>Answer:</h2>
-        <a><p>{{ data.message }}</p></a><br>
-    {% endfor %}
-
-    {% for data in answer_comment %}
         <h2>Comments:</h2>
-        <a><p>{{ data.comment }}</p></a><br><br>
-    {% endfor %}
+        {% for data in question_comment %}
+            <a><p>{{ data.message }}</p></a>
+            <a href="{{ url_for('delete_question_comment', comment_id=data.id) }}">Delete comment</a>
+        {% endfor %}
 
     <form method="post">
         <label for="add-comment">Add your comment:</label><br>
         <input type="text" name="comment" id="add-comment"><br>
         <input type="submit" value="Add comment">
     </form>
-    {{ status }}
     <a href="{{ url_for('show_specific_question', question_id = question_id) }}">Back</a>
 
 {% endblock %}

@@ -49,7 +49,7 @@ def get_all_questions(cursor):
 @connection.connection_handler
 def get_comments_for_question(cursor, question_id):
     cursor.execute("""
-                    SELECT message FROM comment
+                    SELECT id, message FROM comment
                     WHERE %(question_id)s = question_id
                     ORDER BY submission_time;
                     """,
@@ -61,7 +61,8 @@ def get_comments_for_question(cursor, question_id):
 @connection.connection_handler
 def get_comments_for_answer(cursor, answer_id):
     cursor.execute("""
-                    SELECT a.message, c.message AS comment, a.id FROM answer AS a 
+                    SELECT a.message, c.message AS comment_message, a.id, c.id AS comment_id
+                     FROM answer AS a 
                     INNER JOIN comment c ON a.id=c.answer_id
                     WHERE %(answer_id)s = answer_id
                     ORDER BY c.submission_time;
@@ -141,13 +142,13 @@ def get_question_id_by_answer_id(cursor, answer_id):
 
 @connection.connection_handler
 def add_question(cursor, site_input):
-    values = [common.get_id('question'), common.get_submission_time(), 0, 0, site_input[0], site_input[1], '']
+    values = [common.get_id('question'), common.get_submission_time(), 0, 0, site_input[0], site_input[1], '',site_input[2]]
 
     cursor.execute("""
                     INSERT INTO question(id, submission_time, view_number, vote_number, 
-                                         title, message, image)
+                                         title, message, image,user_id)
                     VALUES(%(id)s, %(submission_time)s, %(view_number)s, 
-                           %(vote_number)s, %(title)s, %(message)s, %(image)s)
+                           %(vote_number)s, %(title)s, %(message)s, %(image)s,%(user_id)s)
                     """,
                    {'id': values[0],
                     'submission_time': values[1],
@@ -155,7 +156,8 @@ def add_question(cursor, site_input):
                     'vote_number': values[3],
                     'title': values[4],
                     'message': values[5],
-                    'image': values[6]
+                    'image': values[6],
+                    'user_id':values[7]
                     })
 
 
@@ -319,6 +321,48 @@ def delete_question(cursor, question_id):
 
 
 @connection.connection_handler
+def delete_answer(cursor, answer_id):
+    cursor.execute("""
+                    UPDATE answer
+                    SET message = %(message)s
+                    WHERE id = %(answer_id)s
+                    """,
+                   {'answer_id':answer_id,
+                    'message':'[deleted]'})
+
+
+@connection.connection_handler
+def delete_comment(cursor, comment_id):
+    cursor.execute("""
+                    DELETE FROM comment
+                    WHERE id = %(comment_id)s
+                    """,
+                   {'comment_id':comment_id})
+
+
+@connection.connection_handler
+def get_answer_id_by_comment_id(cursor, comment_id):
+    cursor.execute("""
+                    SELECT c.answer_id FROM comment c
+                    WHERE c.id = %(comment_id)s;
+                    """,
+                   {'comment_id':comment_id})
+    answer_id = cursor.fetchall()
+    return answer_id
+
+
+@connection.connection_handler
+def get_question_id_by_comment_id(cursor, comment_id):
+    cursor.execute("""
+                    SELECT c.question_id FROM comment c
+                    WHERE c.id = %(comment_id)s;
+                    """,
+                   {'comment_id' : comment_id})
+    question_id = cursor.fetchall()
+    return question_id
+
+
+@connection.connection_handler
 def vote_up_answer(cursor, answer_id):
     cursor.execute("""
                     UPDATE answer
@@ -336,3 +380,15 @@ def vote_down_answer(cursor, answer_id):
                     WHERE id = %(answer_id)s;
                     """,
                    {'answer_id':answer_id})
+
+
+@connection.connection_handler
+def get_id_by_name(cursor, name):
+    cursor.execute("""
+                    SELECT id FROM users
+                    WHERE user_name = %(name)s;
+                    """,
+                   {'name': name})
+    user_id = cursor.fetchall()
+    return user_id
+
