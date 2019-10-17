@@ -1,6 +1,7 @@
 {% extends 'layout.html' %}
 {% block content %}
     <h1>Add a comment</h1>
+    <div class="comments">
         <h2> Questions: </h2>
         {% for data in question_data %}
             <a><h2>{{ data.title }}</h2></a><br>
@@ -9,17 +10,19 @@
 
         <h2>Comments:</h2>
         {% for data in question_comment %}
-            <a><p>{{ data.message }}</p></a>
+            <a><p class="comment_message">{{ data.message }}</p></a>
             {% if user_name[0].user_name == session['username'] %}
-                <a href="{{ url_for('delete_question_comment', comment_id=data.id) }}">Delete comment</a>
+                <a href="{{ url_for('delete_question_comment', comment_id=data.id) }}"><button class="submit_btn" type="button" >Delete comment</button></a>
             {% endif %}
         {% endfor %}
-
-    <form method="post">
+</div>
+    <form class="search_form" method="post">
         <label for="add-comment">Add your comment:</label><br>
         <input type="text" name="comment" id="add-comment"><br>
-        <input type="submit" value="Add comment">
+        <button class="submit_btn" type="submit" >Add comment</button>
     </form>
-    <a href="{{ url_for('show_specific_question', question_id = question_id) }}">Back</a>
+
+    <a href="{{ url_for('show_specific_question', question_id = question_id) }}"><button class="back_btn" type="button">Back</button></a>
+
 
 {% endblock %}

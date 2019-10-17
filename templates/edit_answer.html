@@ -10,5 +10,7 @@
         {% endfor%}
         <input type="submit" value="Answer question">
     </form>
-    <a href="{{ url_for('show_specific_question', question_id = question_id) }}">Back</a>
+
+     <a href="{{ url_for('show_specific_question', question_id = question_id) }}"><button class="back_btn" type="button">Back</button></a>
+
 {% endblock %}

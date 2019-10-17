@@ -1,16 +1,18 @@
 {% extends 'layout.html' %}
 {% block content %}
-    <h1>
+    <h1 style="color:cadetblue">
         Add your answer:
     </h1>
     {% for data in answer_data %}
-        <a><h3>{{ data.message }}</h3></a>
+        <a><h3 style="font-weight: normal; text-align: justify;">{{ data.message }}</h3></a>
     {% endfor %}
     <form method="post">
         <label for="new-answer">Your answer:</label><br>
-        <textarea rows="15" cols="50" name="new-answer" id="new-answer"></textarea><br>
-        <input type="submit" value="Answer question">
+        <textarea rows="5" cols="50" name="new-answer" id="new-answer"></textarea><br>
+      <button class="main_btn" type="submit">Answer question</button></a>
+
     </form>
     {{ status }}
-    <a href="{{ url_for('show_specific_question', question_id = question_id) }}">Back</a>
+     <a href="{{ url_for('show_specific_question', question_id = question_id) }}"><button class="back_btn" type="button">Back</button></a>
+
 {% endblock %}

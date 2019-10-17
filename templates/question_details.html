@@ -9,30 +9,34 @@
         <h2>Comments to question</h2>
         {% for comment in question_comment %}
             <ul>
-                <li>{{ comment.message }}</li>
+                <li class="comment_message">{{ comment.message }}</li>
             </ul>
         {% endfor %}
         {% for question_id in question_data %}
-            <a href="{{ url_for('add_new_comment_to_question', question_id = question_id.id ) }}">Show comments</a>
+            <a href="{{ url_for('add_new_comment_to_question', question_id = question_id.id ) }}"><button class="main_btn" type="button">Show comments</button></a>
+
         {% endfor %}
     </div>
     <div class="answer">
-        <h2>Answers to questions</h2>
+        <h2 style="color:cadetblue">Answers to questions</h2>
         <ul>
             {% for data in question_answer %}
                 <li>{{ data.message }}</li>
-                <p>by: {{ data.user_name }}</p>
-                Vote: {{ data.vote_number }}<br>
+                <p class="data_under">by: {{ data.user_name }}</p>
+                <p class="data_under">Vote: {{ data.vote_number }}</p><br>
                 {% if data.message != "[deleted]" and data.user_name == session['username']%}
-                    <a href="{{ url_for('edit_answer',answer_id=data.id) }}">Edit answer</a>
-                    <a href="{{ url_for('delete_answer',answer_id=data.id) }}">Delete answer</a>
+                    <a href="{{ url_for('edit_answer',answer_id=data.id) }}"><button class="main_btn" style="padding:10px; font-size:14px;" type="button">Edit answer</button></a>
+                    <a href="{{ url_for('delete_answer',answer_id=data.id) }}"><button class="main_btn" style="padding:10px; font-size:14px;" type="button">Delete answer</button></a>
                 {% endif %}
-                <a href="{{ url_for('add_new_comment_to_answer', answer_id = data.id) }}">Show comments</a><br>
-                <a href="{{ url_for('vote_up_answer', answer_id=data.id ) }}">Vote Up</a>
-                <a href="{{ url_for('vote_down_answer', answer_id=data.id ) }}">Vote Down</a>
+                <a href="{{ url_for('add_new_comment_to_answer', answer_id = data.id) }}"><button class="main_btn" style="padding:10px; font-size:14px;" type="button">Show comment</button></a>
+                <a href="{{ url_for('vote_up_answer', answer_id=data.id ) }}"><img src="{{ url_for('static', filename='chevron-up-solid.svg') }}"></a>
+                <a href="{{ url_for('vote_down_answer', answer_id=data.id ) }}"><img src="{{ url_for('static', filename='chevron-down-solid.svg') }}"></a>
+
             {% endfor %}
         </ul>
-        <a href="{{ url_for('add_answer', question_id = question_data[0].id ) }}">Add new answer</a>
+     <a href="{{ url_for('add_answer', question_id = question_data[0].id ) }}"><button class="main_btn" type="button">Add new answer</button></a>
+
     </div>
-    <a href="/list">Back</a>
+                <a href="/list"><button class="back_btn" type="button">Back</button></a>
+
 {% endblock %}

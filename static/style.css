@@ -5,6 +5,11 @@ body{
     background-color: #cccccc;
 
 }
+
+img {
+    width: 30px;
+
+}
 .login input{
     padding: 10px;
     border: 1px solid white;
@@ -82,6 +87,23 @@ body{
     background-color: #3E505B;
 }
 
+.main_btn{
+    border:none;
+    background-color: #8AB0AB;
+    color: white;
+    text-decoration: none;
+    padding: 15px;
+    font-size: 20px;
+    margin: 10px;
+
+}
+
+.main_btn:hover{
+    padding: 15px 30px;
+    background-color: #cccccc;
+    color:#3E505B;
+    transition: 1s;
+}
 .main_header{
     color:#8AB0AB;
     font-size: 30px;
@@ -89,6 +111,132 @@ body{
     margin:0px 10px 0px 0px;
 }
 
-table th{
+.search_form{
+    margin: 30px 10px 30px 10px;
+}
 
+.search_form input{
+
+    padding: 10px;
+    width: 250px;
+    font-size: 16px;
+}
+
+.search_form .submit_btn{
+     margin: 5px 5px 5px 5px;
+    padding: 10px 20px;
+    background-color: #8AB0AB;
+    color: #f7fff6;
+    border: none;
+    border-radius: 10%;
+    font-size: 18px;
+}
+
+.search_form .submit_btn:hover{
+    background-color: #cccccc;
+    color: #3E505B;
+    transition: 1s;
+    cursor: pointer;
+
+}
+
+table th{
+    background-color: #8AB0AB;
+    color: white;
+    padding: 10px;
+}
+
+td {
+    padding: 12px 15px;
+    font-size: 18px;
+}
+
+tbody tr:nth-of-type(even) {
+    background-color: #eeeeee;
+
+}
+
+tbody tr:nth-of-type(odd) {
+    background-color: white;
+}
+
+table a{
+    text-decoration: none;
+    color:cadetblue;
+}
+table a:hover{
+    color:#3E505B;
+    transition: 1s;
+}
+.data_under{
+    padding:10px;
+    margin-left:10px;
+    background-color: gainsboro;
+    width: 30%;
+}
+
+.comments{
+    background-color: #eeeeee;
+    padding: 20px;
+    color: #404040;
+}
+
+.comments .comment_message{
+    background-color: white;
+    padding: 20px;
+    list-style-type: none;
+    font-size: 20px;
+
+}
+.comments .submit_btn{
+     margin: 5px 5px 5px 30px;
+    padding: 10px 20px;
+    background-color: #8AB0AB;
+    color: #f7fff6;
+    border: none;
+    border-radius: 10%;
+}
+
+.comment .submit_btn:hover{
+        background-color: #cccccc;
+    color: #3E505B;
+    transition: 1s;
+    cursor: pointer;
+}
+.answer{
+    margin-top: 20px;
+    background-color: #eeeeee;
+    padding: 20px;
+    color: #404040;
+}
+
+.back_btn{
+    border:none;
+    background-color: transparent;
+    color: cadetblue;
+    text-decoration: none;
+    padding: 15px;
+    font-size: 20px;
+    margin: 10px;
+
+}
+
+.back_btn:hover{
+    padding: 15px 30px;
+    border-bottom: 3px solid #3E505B;
+    color:#3E505B;
+
+}
+
+.answer li{
+    background-color: white;
+    padding: 20px;
+    list-style-type: none;
+    font-size: 20px;
+}
+
+textarea{
+    resize:none;
+    padding:20px;
+    border: 1px solid #cccccc;
 }
