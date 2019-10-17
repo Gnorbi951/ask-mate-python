@@ -93,7 +93,6 @@ def add_new_comment_to_answer(answer_id: int):
 @app.route('/question/<question_id>/add-answer', methods=['GET', 'POST'])
 def add_answer(question_id: int):
     answer_data = data_manager.get_question_by_id(question_id)
-    status = ''
     if request.method == 'POST':
         if 'username' in session:
             username = session['username']
@@ -103,9 +102,8 @@ def add_answer(question_id: int):
         else:
             site_input = request.form['new-answer']
             data_manager.add_answer(site_input, None, question_id)
-        status = 'Answer added successfully'
-    return render_template('add_answer.html', question_id=question_id, answer_data=answer_data,
-                           status=status)
+        return redirect(url_for('show_specific_question', question_id=question_id))
+    return render_template('add_answer.html', question_id=question_id, answer_data=answer_data)
 
 
 @app.route('/answer/<answer_id>/edit', methods=['GET', 'POST'])
@@ -173,7 +171,6 @@ def user_page(user_id: int):
     user_name = data_manager.get_user_name_by_id(user_id)
     question_data = data_manager.get_question_by_user_id(user_id)
     answer_data = data_manager.get_answer_by_user_id(user_id)
-    print(answer_data)
     comment_data = data_manager.get_comment_by_user_id(user_id)
     return render_template('user_page.html', user_name=user_name, question_data=question_data,
                            answer_data=answer_data, comment_data=comment_data)
