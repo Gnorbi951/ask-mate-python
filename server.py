@@ -1,4 +1,5 @@
 from flask import Flask, request, render_template, redirect, session, url_for
+
 import data_manager
 import validation
 
@@ -56,7 +57,7 @@ def add_new_comment_to_question(question_id: int):
     if request.method == 'POST':
         if 'username' in session:
             username = session['username']
-            user_id = data_manager.get_id_by_name(username)
+            user_id = data_manager.get_user_id_by_name(username)
             site_input = [question_id, request.form['comment'], 'question', user_id[0].get('id')]
             data_manager.add_comment(site_input)
         else:
@@ -77,7 +78,7 @@ def add_new_comment_to_answer(answer_id: int):
     if request.method == 'POST':
         if 'username' in session:
             username = session['username']
-            user_id = data_manager.get_id_by_name(username)
+            user_id = data_manager.get_user_id_by_name(username)
             site_input = [answer_id, request.form['comment'], 'answer', user_id[0].get('id')]
             data_manager.add_comment(site_input)
         else:
@@ -96,7 +97,7 @@ def add_answer(question_id: int):
     if request.method == 'POST':
         if 'username' in session:
             username = session['username']
-            user_id = data_manager.get_id_by_name(username)
+            user_id = data_manager.get_user_id_by_name(username)
             site_input = request.form['new-answer']
             data_manager.add_answer(site_input, user_id[0].get('id'), question_id)
         else:
@@ -128,13 +129,13 @@ def add_question():
 
     if 'username' in session:
         username = session['username']
-        user_id = data_manager.get_id_by_name(username)
+        user_id = data_manager.get_user_id_by_name(username)
         site_input = [request.form['title'], request.form['message'], user_id[0].get('id')]
         data_manager.add_question(site_input)
     else:
         site_input = [request.form['title'], request.form['message'], None]
         data_manager.add_question(site_input)
-    return redirect('/')
+    return redirect(url_for('show_all_questions'))
 
 
 @app.route('/question/<question_id>/edit', methods=['POST', 'GET'])
@@ -153,11 +154,16 @@ def edit_question(question_id: int):
 def register_user():
     if request.method == 'POST':
         user_name = request.form.get('user_name')
-        password = request.form.get('pw')
-        hashed_password = validation.hash_password(password)
-        all_input = [user_name, hashed_password]
-        data_manager.add_user(all_input)
-        return redirect('/')
+        if validation.check_if_user_name_exists(user_name):
+            message = 'Name already taken'
+            return render_template('registration.html', message=message)
+        else:
+            password = request.form.get('pw')
+            hashed_password = validation.hash_password(password)
+            all_input = [user_name, hashed_password]
+            data_manager.add_user(all_input)
+            message = 'Registration successful'
+            return render_template('registration.html', message=message)
     return render_template('registration.html')
 
 

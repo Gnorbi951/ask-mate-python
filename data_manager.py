@@ -441,7 +441,7 @@ def vote_down_answer(cursor, answer_id):
 
 
 @connection.connection_handler
-def get_id_by_name(cursor, name):
+def get_user_id_by_name(cursor, name):
     cursor.execute("""
                     SELECT id FROM users
                     WHERE user_name = %(name)s;
