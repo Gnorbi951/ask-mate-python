@@ -79,7 +79,7 @@ def get_comments_for_answer(cursor, answer_id):
 @connection.connection_handler
 def get_answers_for_questions(cursor, question_id):
     cursor.execute("""
-                    SELECT answer.id AS answer_id, COALESCE(user_name, 'Guest') AS user_name,
+                    SELECT answer.id AS id, COALESCE(user_name, 'Guest') AS user_name,
                     message, vote_number
                     FROM answer
                     LEFT JOIN users
