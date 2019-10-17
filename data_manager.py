@@ -40,8 +40,12 @@ def search(cursor, search_phrase):
 @connection.connection_handler
 def get_all_questions(cursor):
     cursor.execute("""
-                    SELECT * FROM question
-                    ORDER BY submission_time DESC;""")
+                    SELECT COALESCE(user_name, 'Guest') AS name_of_user, submission_time,
+                        question.message, question.vote_number, question.id, question.title
+                    FROM question
+                    LEFT JOIN users
+                        ON question.user_id = users.id
+                    ORDER BY submission_time DESC""")
     question_list = cursor.fetchall()
     return question_list
 
