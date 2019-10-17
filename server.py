@@ -152,11 +152,16 @@ def edit_question(question_id: int):
 def register_user():
     if request.method == 'POST':
         user_name = request.form.get('user_name')
-        password = request.form.get('pw')
-        hashed_password = validation.hash_password(password)
-        all_input = [user_name, hashed_password]
-        data_manager.add_user(all_input)
-        return redirect('/')
+        if validation.check_if_user_name_exists(user_name):
+            message = 'Name already taken'
+            return render_template('registration.html', message=message)
+        else:
+            password = request.form.get('pw')
+            hashed_password = validation.hash_password(password)
+            all_input = [user_name, hashed_password]
+            data_manager.add_user(all_input)
+            message = 'Registration successful'
+            return render_template('registration.html', message=message)
     return render_template('registration.html')
 
 
