@@ -55,7 +55,7 @@ def add_new_comment_to_question(question_id: int):
     if request.method == 'POST':
         if 'username' in session:
             username = session['username']
-            user_id = data_manager.get_id_by_name(username)
+            user_id = data_manager.get_user_id_by_name(username)
             site_input = [question_id, request.form['comment'], 'question', user_id[0].get('id')]
             print(site_input)
             data_manager.add_comment(site_input)
@@ -77,7 +77,7 @@ def add_new_comment_to_answer(answer_id: int):
     if request.method == 'POST':
         if 'username' in session:
             username = session['username']
-            user_id = data_manager.get_id_by_name(username)
+            user_id = data_manager.get_user_id_by_name(username)
             site_input = [answer_id, request.form['comment'], 'answer', user_id[0].get('id')]
             data_manager.add_comment(site_input)
         else:
