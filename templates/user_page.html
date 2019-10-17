@@ -5,23 +5,35 @@
         <h2>User:</h2>
         <em>{{ user_name[0].get('user_name') }}</em><br><br>
         <h3>Questions:</h3>
-            {% for data in question_data %}
+            {% if answer_data %}
+                {% for data in question_data %}
             <ul>
-                <li><a href="{{ url_for('show_specific_question', question_id = data.id) }}">{{ data.title }}</a></li>
+                <li>{{ data.title }}</li>
             </ul>
-            {% endfor %}
+                {% endfor %}
+            {% else %}
+                <p>Nothing to show</p>
+            {% endif %}
         <h3>Answers:</h3>
-            {% for data in answer_data %}
+            {% if question_data %}
+                {% for data in question_data %}
             <ul>
                 <li>{{ data.message }}</li>
             </ul>
-            {% endfor %}
+                {% endfor %}
+            {% else %}
+                <p>Nothing to show</p>
+            {% endif %}
         <h3>Comments:</h3>
-            {% for data in comment_data %}
+            {% if comment_data %}
+                {% for data in comment_data %}
             <ul>
                 <li>{{ data.message }}</li>
             </ul>
-            {% endfor%}
+                {% endfor %}
+            {% else %}
+                <p>Nothing to show</p>
+            {% endif %}
     <a href="{{ url_for('list_users') }}">Back</a>
 
 {% endblock %}

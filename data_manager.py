@@ -131,7 +131,7 @@ def get_answer_by_question_id(cursor, question_id):
                     SELECT * FROM answer
                     WHERE question_id = %(question_id)s;
                     """,
-                   {'question_id' : question_id})
+                   {'question_id': question_id})
     answer_details = cursor.fetchall()
     return answer_details
 
@@ -150,7 +150,8 @@ def get_question_id_by_answer_id(cursor, answer_id):
 
 @connection.connection_handler
 def add_question(cursor, site_input):
-    values = [common.get_id('question'), common.get_submission_time(), 0, 0, site_input[0], site_input[1], '',site_input[2]]
+    values = [common.get_id('question'), common.get_submission_time(), 0, 0, site_input[0], site_input[1],
+              '', site_input[2]]
 
     cursor.execute("""
                     INSERT INTO question(id, submission_time, view_number, vote_number, 
@@ -165,8 +166,7 @@ def add_question(cursor, site_input):
                     'title': values[4],
                     'message': values[5],
                     'image': values[6],
-                    'user_id':values[7]
-                    })
+                    'user_id': values[7]})
 
 
 @connection.connection_handler
@@ -177,10 +177,9 @@ def edit_question(cursor, site_input):
                     WHERE id = %(question_id)s;
                     """,
                    {
-                        'message' : site_input[1],
-                        'title' : site_input[0],
-                        'question_id' : site_input[2]})
-
+                       'message': site_input[1],
+                       'title': site_input[0],
+                       'question_id': site_input[2]})
 
 
 @connection.connection_handler
@@ -222,7 +221,7 @@ def add_comment(cursor, server_input):
                         'message': message,
                         'submission_time': submission_time,
                         'edited_count': edited_count,
-                        'user_id' : user_id})
+                        'user_id': user_id})
     else:
         answer_id = server_input[id_]
         question_id = None
@@ -241,7 +240,7 @@ def add_comment(cursor, server_input):
                         'message': message,
                         'submission_time': submission_time,
                         'edited_count': edited_count,
-                        'user_id' : user_id})
+                        'user_id': user_id})
 
 
 @connection.connection_handler
@@ -285,7 +284,7 @@ def get_user_name_by_id(cursor, user_id):
                     SELECT user_name FROM users
                     WHERE id = %(user_id)s;
                     """,
-                   {'user_id':user_id})
+                   {'user_id': user_id})
     user_name = cursor.fetchall()
     return user_name
 
@@ -297,7 +296,7 @@ def get_question_by_user_id(cursor, user_id):
                     JOIN question q ON users.id = q.user_id
                     WHERE q.user_id = %(user_id)s;
                     """,
-                   {'user_id':user_id})
+                   {'user_id': user_id})
     question_data = cursor.fetchall()
     return question_data
 
@@ -309,7 +308,7 @@ def get_answer_by_user_id(cursor, user_id):
                     JOIN answer a ON users.id = a.user_id
                     WHERE a.user_id = %(user_id)s;
                     """,
-                   {'user_id':user_id})
+                   {'user_id': user_id})
     answer_data = cursor.fetchall()
     return answer_data
 
@@ -321,7 +320,7 @@ def get_comment_by_user_id(cursor, user_id):
                     JOIN comment c on users.id = c.user_id
                     WHERE c.user_id = %(user_id)s;
                     """,
-                   {'user_id':user_id})
+                   {'user_id': user_id})
     comment_data = cursor.fetchall()
     return comment_data
 
@@ -345,7 +344,7 @@ def get_user_activities(cursor, user_id):
                     FULL JOIN comment c ON u.id = c.user_id
                     WHERE u.id = %(user_id)s;
                     """,
-                   {'user_id' : user_id})
+                   {'user_id': user_id})
     user_activities = cursor.fetchall()
     return user_activities
 
@@ -357,7 +356,7 @@ def vote_up(cursor, question_id):
                     SET vote_number = vote_number + 1
                     WHERE id = %(question_id)s;
                     """,
-                   {'question_id':question_id})
+                   {'question_id': question_id})
 
 
 @connection.connection_handler
@@ -367,7 +366,7 @@ def vote_down(cursor, question_id):
                     SET vote_number = vote_number - 1
                     WHERE id = %(question_id)s;
                     """,
-                   {'question_id':question_id})
+                   {'question_id': question_id})
 
 
 @connection.connection_handler
@@ -376,7 +375,7 @@ def delete_question(cursor, question_id):
                     DELETE FROM question
                     WHERE id = %(question_id)s;
                     """,
-                   {'question_id':question_id})
+                   {'question_id': question_id})
 
 
 @connection.connection_handler
@@ -386,8 +385,8 @@ def delete_answer(cursor, answer_id):
                     SET message = %(message)s
                     WHERE id = %(answer_id)s
                     """,
-                   {'answer_id':answer_id,
-                    'message':'[deleted]'})
+                   {'answer_id': answer_id,
+                    'message': '[deleted]'})
 
 
 @connection.connection_handler
@@ -396,7 +395,7 @@ def delete_comment(cursor, comment_id):
                     DELETE FROM comment
                     WHERE id = %(comment_id)s
                     """,
-                   {'comment_id':comment_id})
+                   {'comment_id': comment_id})
 
 
 @connection.connection_handler
@@ -405,7 +404,7 @@ def get_answer_id_by_comment_id(cursor, comment_id):
                     SELECT c.answer_id FROM comment c
                     WHERE c.id = %(comment_id)s;
                     """,
-                   {'comment_id':comment_id})
+                   {'comment_id': comment_id})
     answer_id = cursor.fetchall()
     return answer_id
 
@@ -416,7 +415,7 @@ def get_question_id_by_comment_id(cursor, comment_id):
                     SELECT c.question_id FROM comment c
                     WHERE c.id = %(comment_id)s;
                     """,
-                   {'comment_id' : comment_id})
+                   {'comment_id': comment_id})
     question_id = cursor.fetchall()
     return question_id
 
@@ -428,7 +427,7 @@ def vote_up_answer(cursor, answer_id):
                     SET vote_number = vote_number + 1
                     WHERE id = %(answer_id)s;
                     """,
-                   {'answer_id':answer_id})
+                   {'answer_id': answer_id})
 
 
 @connection.connection_handler
@@ -438,7 +437,7 @@ def vote_down_answer(cursor, answer_id):
                     SET vote_number = vote_number - 1
                     WHERE id = %(answer_id)s;
                     """,
-                   {'answer_id':answer_id})
+                   {'answer_id': answer_id})
 
 
 @connection.connection_handler
@@ -450,4 +449,3 @@ def get_id_by_name(cursor, name):
                    {'name': name})
     user_id = cursor.fetchall()
     return user_id
-

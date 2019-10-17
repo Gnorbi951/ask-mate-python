@@ -1,5 +1,4 @@
 from flask import Flask, request, render_template, redirect, session, url_for
-
 import data_manager
 import validation
 
@@ -22,10 +21,12 @@ def list_questions():
         data = data_manager.get_least_questions()
         return render_template('index.html', data=data)
 
+
 @app.route('/logout')
 def logout():
     session.pop('username', None)
     return redirect(url_for('list_questions'))
+
 
 @app.route('/search')
 def search():
@@ -39,7 +40,7 @@ def show_all_questions():
     return render_template('list.html', question_list=question_list)
 
 
-@app.route('/question/<question_id>',methods=['GET','POST'])
+@app.route('/question/<question_id>', methods=['GET', 'POST'])
 def show_specific_question(question_id: int):
     question_data = data_manager.get_question_by_id(question_id)
     question_comment = data_manager.get_comments_for_question(question_id)
@@ -57,7 +58,6 @@ def add_new_comment_to_question(question_id: int):
             username = session['username']
             user_id = data_manager.get_id_by_name(username)
             site_input = [question_id, request.form['comment'], 'question', user_id[0].get('id')]
-            print(site_input)
             data_manager.add_comment(site_input)
         else:
             site_input = [question_id, request.form['comment'], 'question', None]
@@ -103,6 +103,7 @@ def add_answer(question_id: int):
             site_input = request.form['new-answer']
             data_manager.add_answer(site_input, None, question_id)
         return redirect(url_for('show_specific_question', question_id=question_id))
+
     return render_template('add_answer.html', question_id=question_id, answer_data=answer_data)
 
 
@@ -126,7 +127,7 @@ def add_question():
         return render_template('add_a_question.html')
 
     if 'username' in session:
-        username=session['username']
+        username = session['username']
         user_id = data_manager.get_id_by_name(username)
         site_input = [request.form['title'], request.form['message'], user_id[0].get('id')]
         data_manager.add_question(site_input)
@@ -232,6 +233,7 @@ def delete_question_comment(comment_id: int):
     question_id = question_id[0].get('question_id')
     data_manager.delete_comment(comment_id)
     return redirect(url_for('add_new_comment_to_question', question_id=question_id))
+
 
 if __name__ == '__main__':
     app.run(
