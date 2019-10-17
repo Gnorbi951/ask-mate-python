@@ -95,8 +95,14 @@ def add_answer(question_id: int):
     answer_data = data_manager.get_question_by_id(question_id)
     status = ''
     if request.method == 'POST':
-        site_input = request.form['new-answer']
-        data_manager.add_answer(site_input, question_id)
+        if 'username' in session:
+            username = session['username']
+            user_id = data_manager.get_id_by_name(username)
+            site_input = request.form['new-answer']
+            data_manager.add_answer(site_input, user_id[0].get('id'), question_id)
+        else:
+            site_input = request.form['new-answer']
+            data_manager.add_answer(site_input, None, question_id)
         status = 'Answer added successfully'
     return render_template('add_answer.html', question_id=question_id, answer_data=answer_data,
                            status=status)
