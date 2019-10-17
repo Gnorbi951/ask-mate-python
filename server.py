@@ -85,7 +85,7 @@ def add_answer(question_id: int):
     if request.method == 'POST':
         if 'username' in session:
             username = session['username']
-            user_id = data_manager.get_id_by_name(username)
+            user_id = data_manager.get_user_id_by_name(username)
             site_input = request.form['new-answer']
             data_manager.add_answer(site_input, user_id[0].get('id'), question_id)
         else:
@@ -117,7 +117,7 @@ def add_question():
 
     if 'username' in session:
         username=session['username']
-        user_id = data_manager.get_id_by_name(username)
+        user_id = data_manager.get_user_id_by_name(username)
         site_input = [request.form['title'], request.form['message'], user_id[0].get('id')]
         data_manager.add_question(site_input)
     else:
