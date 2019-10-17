@@ -107,7 +107,6 @@ def edit_answer(answer_id: int):
 def add_question():
     if request.method == 'GET':
         return render_template('add_a_question.html')
-
     site_input = [request.form['title'], request.form['message']]
     data_manager.add_question(site_input)
     return redirect('/')
