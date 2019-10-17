@@ -79,7 +79,11 @@ def get_comments_for_answer(cursor, answer_id):
 @connection.connection_handler
 def get_answers_for_questions(cursor, question_id):
     cursor.execute("""
-                    SELECT * FROM answer
+                    SELECT answer.id AS id, COALESCE(user_name, 'Guest') AS user_name,
+                    message, vote_number
+                    FROM answer
+                    LEFT JOIN users
+                        ON users.id = answer.user_id
                     WHERE question_id = %(question_id)s
                     ORDER BY submission_time;
                     """,
@@ -198,42 +202,46 @@ def add_answer(cursor, site_input, user_id, question_id):
 
 @connection.connection_handler
 def add_comment(cursor, server_input):
-    id_, comment, instance = 0, 1, 2
+    id_, comment, instance, user_id = 0, 1, 2, 3
     if server_input[instance] == 'question':
         question_id = server_input[id_]
         answer_id = None
         message = server_input[comment]
         submission_time = common.get_submission_time()
         edited_count = None
+        user_id = server_input[user_id]
 
         cursor.execute("""
                             INSERT INTO comment(question_id, answer_id, message,
-                                                submission_time, edited_count)
+                                                submission_time, edited_count, user_id)
                             VALUES(%(question_id)s, %(answer_id)s, %(message)s,
-                                   %(submission_time)s, %(edited_count)s);
+                                   %(submission_time)s, %(edited_count)s, %(user_id)s);
                                    """,
                        {'question_id': question_id,
                         'answer_id': answer_id,
                         'message': message,
                         'submission_time': submission_time,
-                        'edited_count': edited_count})
+                        'edited_count': edited_count,
+                        'user_id' : user_id})
     else:
         answer_id = server_input[id_]
         question_id = None
         submission_time = common.get_submission_time()
         message = server_input[comment]
         edited_count = None
+        user_id = server_input[user_id]
         cursor.execute("""
                             INSERT INTO comment(question_id, answer_id, message,
-                                                submission_time, edited_count)
+                                                submission_time, edited_count, user_id)
                             VALUES(%(question_id)s, %(answer_id)s, %(message)s,
-                                   %(submission_time)s, %(edited_count)s);
+                                   %(submission_time)s, %(edited_count)s, %(user_id)s);
                                    """,
                        {'question_id': question_id,
                         'answer_id': answer_id,
                         'message': message,
                         'submission_time': submission_time,
-                        'edited_count': edited_count})
+                        'edited_count': edited_count,
+                        'user_id' : user_id})
 
 
 @connection.connection_handler
@@ -270,6 +278,52 @@ def get_existing_users(cursor):
     existing_users = cursor.fetchall()
     return existing_users
 
+
+@connection.connection_handler
+def get_user_name_by_id(cursor, user_id):
+    cursor.execute("""
+                    SELECT user_name FROM users
+                    WHERE id = %(user_id)s;
+                    """,
+                   {'user_id':user_id})
+    user_name = cursor.fetchall()
+    return user_name
+
+
+@connection.connection_handler
+def get_question_by_user_id(cursor, user_id):
+    cursor.execute("""
+                    SELECT q.id, q.title, q.message FROM users
+                    JOIN question q ON users.id = q.user_id
+                    WHERE q.user_id = %(user_id)s;
+                    """,
+                   {'user_id':user_id})
+    question_data = cursor.fetchall()
+    return question_data
+
+
+@connection.connection_handler
+def get_answer_by_user_id(cursor, user_id):
+    cursor.execute("""
+                    SELECT a.message FROM users
+                    JOIN answer a ON users.id = a.user_id
+                    WHERE a.user_id = %(user_id)s;
+                    """,
+                   {'user_id':user_id})
+    answer_data = cursor.fetchall()
+    return answer_data
+
+
+@connection.connection_handler
+def get_comment_by_user_id(cursor, user_id):
+    cursor.execute("""
+                    SELECT c.message FROM users
+                    JOIN comment c on users.id = c.user_id
+                    WHERE c.user_id = %(user_id)s;
+                    """,
+                   {'user_id':user_id})
+    comment_data = cursor.fetchall()
+    return comment_data
 
 
 @connection.connection_handler

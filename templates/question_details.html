@@ -21,6 +21,7 @@
         <ul>
             {% for data in question_answer %}
                 <li>{{ data.message }}</li>
+                <p>by: {{ data.user_name }}</p>
                 Vote: {{ data.vote_number }}<br>
                 {% if data.message != "[deleted]" %}
                     <a href="{{ url_for('edit_answer',answer_id=data.id) }}">Edit answer</a>

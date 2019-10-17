@@ -2,22 +2,26 @@
 {% block content %}
     <h1>User Page</h1>
 
-    {% for data in user_data %}
         <h2>User:</h2>
-        <em>{{ data.user_name }}</em><br><br>
+        <em>{{ user_name[0].get('user_name') }}</em><br><br>
         <h3>Questions:</h3>
+            {% for data in question_data %}
             <ul>
                 <li><a href="{{ url_for('show_specific_question', question_id = data.id) }}">{{ data.title }}</a></li>
             </ul>
+            {% endfor %}
         <h3>Answers:</h3>
+            {% for data in answer_data %}
             <ul>
-                <li>{{ data.ans_message if data.ans_message else "No answers yet" }}</li>
+                <li>{{ data.message }}</li>
             </ul>
+            {% endfor %}
         <h3>Comments:</h3>
+            {% for data in comment_data %}
             <ul>
-                <li>{{ data.com_message if data.com_message else "No comments yet" }}</li>
+                <li>{{ data.message }}</li>
             </ul>
-    {% endfor%}
+            {% endfor%}
     <a href="{{ url_for('list_users') }}">Back</a>
 
 {% endblock %}
