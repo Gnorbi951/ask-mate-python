@@ -109,18 +109,14 @@ def add_question():
     if request.method == 'GET':
         return render_template('add_a_question.html')
 
-
     if 'username' in session:
         username=session['username']
         user_id = data_manager.get_id_by_name(username)
         site_input = [request.form['title'], request.form['message'], user_id[0].get('id')]
         data_manager.add_question(site_input)
-
-
     else:
-        site_input = [request.form['title'], request.form['message'],None ]
+        site_input = [request.form['title'], request.form['message'], None]
         data_manager.add_question(site_input)
-
     return redirect('/')
 
 
