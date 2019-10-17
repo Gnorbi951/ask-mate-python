@@ -13,7 +13,7 @@
             </ul>
         {% endfor %}
         {% for question_id in question_data %}
-            <a href="{{ url_for('add_new_comment_to_question', question_id = question_id.id ) }}">Add new comment</a>
+            <a href="{{ url_for('add_new_comment_to_question', question_id = question_id.id ) }}">Show comments</a>
         {% endfor %}
     </div>
     <div class="answer">
