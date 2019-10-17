@@ -46,6 +46,10 @@ img {
 
 
 }
+
+.search_form input{
+    margin: 10px;
+}
 .login a{
     text-decoration: none;
     color: #8AB0AB;

@@ -2,14 +2,15 @@
 {% block content %}
     <div class="registration">
     <h1>Registration</h1>
-    <form method="post">
-        <label for="name">User Name:</label><br>
+    <form class="search_form" method="post">
+        <label class="label" for="name">User Name:</label><br>
         <input type="text" required id="name" name="user_name" placeholder="Your User Name" autocomplete="off"><br>
         <label for="password">Password:</label><br>
         <input type="password" required id="password" name="pw" placeholder="Your Password" autocomplete="off"><br>
-        <input type="submit">
+        <button class="main_btn" type="submit">Submit</button></a>
     </form>
     <p>{{ message }}</p>
     </div>
-    <a href="/">Back to main page</a>
+     <a href="/"><button class="back_btn" type="button">Back to main page</button></a>
+
 {% endblock %}
