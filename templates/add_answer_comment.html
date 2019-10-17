@@ -15,7 +15,9 @@
         <h2>Comments:</h2>
         {% for data in answer_comment %}
             <a><p>{{ data.comment_message }}</p></a>
-            <a href="{{ url_for('delete_answer_comment', comment_id=data.comment_id) }}">Delete comment</a>
+            {% if user_name[0].get('user_name') == session['username'] %}
+                <a href="{{ url_for('delete_answer_comment', comment_id=data.comment_id) }}">Delete comment</a>
+            {% endif %}
         {% endfor %}
 
     <form method="post">

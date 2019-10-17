@@ -54,6 +54,7 @@ def show_specific_question(question_id: int):
 def add_new_comment_to_question(question_id: int):
     question_data = data_manager.get_question_by_id(question_id)
     question_comment = data_manager.get_comments_for_question(question_id)
+    user_name = data_manager.get_answers_for_questions(question_id)
     if request.method == 'POST':
         if 'username' in session:
             username = session['username']
@@ -65,13 +66,15 @@ def add_new_comment_to_question(question_id: int):
             data_manager.add_comment(site_input)
         return redirect(url_for('add_new_comment_to_question', question_id=question_id))
     return render_template('add_question_comment.html', question_data=question_data,
-                           question_id=question_id, question_comment=question_comment)
+                           question_id=question_id, question_comment=question_comment,
+                           user_name=user_name)
 
 
 @app.route('/answer/<answer_id>/new-comment', methods=['GET', 'POST'])
 def add_new_comment_to_answer(answer_id: int):
     question_id = data_manager.get_question_id_by_answer_id(answer_id)
     question_id = question_id[0].get('id')
+    user_name = data_manager.get_answers_for_questions(question_id)
     answer_data = data_manager.get_answer_by_id(answer_id)
     question_data = data_manager.get_question_by_id(question_id)
     answer_comment = data_manager.get_comments_for_answer(answer_id)
@@ -88,7 +91,7 @@ def add_new_comment_to_answer(answer_id: int):
 
     return render_template('add_answer_comment.html', answer_data=answer_data,
                            answer_comment=answer_comment, question_id=question_id,
-                           question_data=question_data)
+                           question_data=question_data, user_name=user_name)
 
 
 @app.route('/question/<question_id>/add-answer', methods=['GET', 'POST'])
