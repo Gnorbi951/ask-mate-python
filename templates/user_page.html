@@ -11,11 +11,11 @@
             </ul>
         <h3>Answers:</h3>
             <ul>
-                <li>{{ data.ans_message }}</li>
+                <li>{{ data.ans_message if data.ans_message else "No answers yet" }}</li>
             </ul>
         <h3>Comments:</h3>
             <ul>
-                <li>{{ data.com_message }}</li>
+                <li>{{ data.com_message if data.com_message else "No comments yet" }}</li>
             </ul>
     {% endfor%}
     <a href="{{ url_for('list_users') }}">Back</a>

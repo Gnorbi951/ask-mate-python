@@ -281,12 +281,12 @@ def get_user_activities(cursor, user_id):
     cursor.execute("""
                     SELECT a.message AS ans_message, c.message AS com_message,
                     q.title, u.user_name, q.id  FROM users AS u 
-                    JOIN answer a on u.id = a.user_id
-                    JOIN question q on u.id = q.user_id
-                    JOIN comment c on u.id = c.user_id
+                    FULL JOIN answer a ON u.id = a.user_id
+                    FULL JOIN question q ON u.id = q.user_id
+                    FULL JOIN comment c ON u.id = c.user_id
                     WHERE u.id = %(user_id)s;
                     """,
-                   {'user_id':user_id})
+                   {'user_id' : user_id})
     user_activities = cursor.fetchall()
     return user_activities
 
