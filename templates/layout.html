@@ -3,23 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Ask Mate</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+<div class="nav"><h1 class="main_header">AskMate</h1></div>
     <div class="content-wrapper">
-         {% if session['username'] %}
-            You are logged in as {{ session['username']}}<br>
-            <a href="{{ url_for('logout') }}">Log out</a>
+        <div class="login">
+             {% if session['username'] %}
+                You are logged in as {{ session['username']}}<br>
+                <a href="{{ url_for('logout') }}">Log out</a>
 
-         {% else %}
-            Log in
-            <form method="post" action="/">
-                Username<input type=text name=username placeholder="Username">
-                Password<input type=password name=password placeholder="Password">
-                <input type=submit value=Login><br>
-                <a href="{{ url_for('register_user') }}">Register</a>
-            </form>
-            {% endif %}
+             {% else %}
+                 <div class="login_form">
+                     <p class="login_header">Log in</p>
+
+                    <form method="post" action="/">
+                    Username<input type=text name=username placeholder="Username" autocomplete="off"><br>
+                    Password<input type=password name=password placeholder="Password"><br>
+                    <a href="{{ url_for('register_user') }}">Register</a><input class="submit_btn" autocomplete="off" type=submit value=Login><br>
+
+                </form>
+                 </div>
+                {% endif %}
+        </div>
     {% block content %} {% endblock %}
     </div>
 </body>

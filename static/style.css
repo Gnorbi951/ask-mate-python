@@ -1,0 +1,94 @@
+body{
+    padding: 0;
+    margin:0;
+    font-family: sans-serif;
+    background-color: #cccccc;
+
+}
+.login input{
+    padding: 10px;
+    border: 1px solid white;
+    margin: 10px 10px 10px 0px;
+
+}
+.login_header{
+    margin: 0px 10px 20px 20px;
+    font-size: 28px;
+    font-weight: bolder;
+    color:#8AB0AB;
+    text-transform: uppercase;
+
+}
+
+.login .submit_btn{
+    margin: 5px 5px 5px 30px;
+    padding: 10px 20px;
+    background-color: #8AB0AB;
+    color: #f7fff6;
+    border: none;
+    border-radius: 10%;
+}
+
+.login .submit_btn:hover{
+    background-color: #cccccc;
+    color: #3E505B;
+    transition: 1s;
+    cursor: pointer;
+}
+
+.login label{
+    margin: 20px;
+
+
+}
+.login a{
+    text-decoration: none;
+    color: #8AB0AB;
+}
+.login a:hover{
+    color: white;
+    transition: 1s;
+}
+
+.content-wrapper{
+    width: 70%;
+    background-color: white;
+    padding: 30px;
+    margin: 100px auto;
+
+}
+.login{
+    background-color: #3E505B;
+    color: white;
+    padding: 10px;
+    margin: 0px;
+
+}
+
+.login,.login_form{
+
+    overflow: hidden;
+    width: 40%;
+    padding: 20px;
+}
+
+.nav{
+    margin:0px;
+    padding:15px;
+    top:0;
+    left:0;
+    width: 100%;
+    overflow: hidden;
+    background-color: #3E505B;
+}
+
+.main_header{
+    color:#8AB0AB;
+    font-size: 30px;
+    float:right;
+    margin:0px 10px 0px 0px;
+}
+
+table th{
+
+}
