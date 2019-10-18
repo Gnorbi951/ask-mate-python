@@ -247,6 +247,6 @@ def delete_question_comment(comment_id: int):
 if __name__ == '__main__':
     app.run(
         debug=True,
-        host='10.44.1.170',
+        host='127.0.0.1',
         port=7654
     )
