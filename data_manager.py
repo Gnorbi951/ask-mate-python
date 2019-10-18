@@ -449,3 +449,11 @@ def get_user_id_by_name(cursor, name):
                    {'name': name})
     user_id = cursor.fetchall()
     return user_id
+
+
+def get_question_details(question_id):
+    question = get_question_by_id(question_id)
+    question['comments'] = get_comments_for_question(question_id)
+    question['answers'] = get_answer_by_question_id(question_id)
+
+    return question
