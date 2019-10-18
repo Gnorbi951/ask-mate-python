@@ -9,8 +9,8 @@
             <p><label for="message-input">Describe the question:</label></p>
                 <textarea rows="10" cols="50" name="message" id="message-input"></textarea>
 
-            <p><button type="submit">Ask question</button></p>
+            <p><button type="submit" class="main_btn">Ask question</button></p>
         </form>
-        <a href="{{ url_for('show_all_questions') }}">Back</a>
+        <a href="{{ url_for('show_all_questions') }}"><button class="back_btn" type="button">Back</button</a>
 
 {% endblock %}
